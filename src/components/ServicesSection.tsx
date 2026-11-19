@@ -13,7 +13,7 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({
 }) => {
   const [activeService, setActiveService] = useState<ServiceItem>(SERVICES_DATA[0]);
   const [hoveredService, setHoveredService] = useState<ServiceItem | null>(null);
-  const hoverTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const hoverTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const displayService = hoveredService || activeService;
 
