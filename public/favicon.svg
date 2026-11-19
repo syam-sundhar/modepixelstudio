@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none">
+  <rect width="100" height="100" rx="20" fill="#060608"/>
+  <!-- Coat Hanger Hook -->
+  <path d="M50 32 C 55 32, 57 27, 54 23 C 51 19, 44 20, 45 26 C 45 30, 50 31, 50 35 L 50 39" stroke="#ffffff" stroke-width="3" stroke-linecap="round" fill="none"/>
+  <!-- Stylized Geometric M -->
+  <path d="M22 66 L22 38 L50 56 L78 38 L78 66 L68 66 L68 50 L50 62 L32 50 L32 66 Z" fill="#ffffff"/>
+  <!-- Subtle Lime Dot Accent -->
+  <circle cx="50" cy="56" r="2.5" fill="#d4ff00"/>
+</svg>

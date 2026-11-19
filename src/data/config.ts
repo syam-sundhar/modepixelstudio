@@ -1,0 +1,15 @@
+export const AGENCY_CONFIG = {
+  name: 'MODEPIXEL',
+  tagline: 'PRODUCTS DESERVE BETTER STORIES.',
+  subline: 'We transform product references into premium fashion and commercial imagery through AI-powered creative production.',
+  founder: 'Syam Sundhar',
+  email: 'modepixelstudio@gmail.com',
+  phone: '+91 8328157011',
+  whatsappNumber: '918328157011',
+  whatsappUrl: 'https://wa.me/918328157011?text=Hi%20MODEPIXEL%20team!%20I%20have%20a%20product%20and%20would%20like%20to%20discuss%20an%20AI%20fashion%20campaign.',
+  instagramHandle: '@modelpixelstudio',
+  instagramUrl: 'https://www.instagram.com/modepixelstudio/',
+  location: 'Studio / Global Remote',
+  foundedYear: '2026',
+  workingHours: 'Mon — Sat / 10:00 — 19:00 IST',
+};
