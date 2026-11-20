@@ -1,5 +1,5 @@
-import React, { useRef, useState, useEffect } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import React, { useRef, useEffect } from 'react';
+import { motion, useScroll, useTransform, useMotionValue, useSpring } from 'framer-motion';
 import { ArrowDown, ArrowUpRight, Sparkles } from 'lucide-react';
 import { AGENCY_CONFIG } from '../data/config';
 
@@ -13,24 +13,38 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   onStartProject,
 }) => {
   const containerRef = useRef<HTMLElement>(null);
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const [hasReducedMotion, setHasReducedMotion] = useState(false);
+
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+  const springX = useSpring(mouseX, { damping: 40, stiffness: 120 });
+  const springY = useSpring(mouseY, { damping: 40, stiffness: 120 });
 
   useEffect(() => {
     const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-    setHasReducedMotion(mediaQuery.matches);
+    if (mediaQuery.matches) return;
 
+    let rafId: number | null = null;
     const handleMouseMove = (e: MouseEvent) => {
-      if (hasReducedMotion) return;
-      const { innerWidth, innerHeight } = window;
-      const x = (e.clientX / innerWidth - 0.5) * 2;
-      const y = (e.clientY / innerHeight - 0.5) * 2;
-      setMousePosition({ x, y });
+      // Zero computation if user scrolled past the hero
+      if (window.scrollY > window.innerHeight) return;
+
+      if (rafId === null) {
+        rafId = requestAnimationFrame(() => {
+          const x = (e.clientX / window.innerWidth - 0.5) * 10;
+          const y = (e.clientY / window.innerHeight - 0.5) * 10;
+          mouseX.set(x);
+          mouseY.set(y);
+          rafId = null;
+        });
+      }
     };
 
     window.addEventListener('mousemove', handleMouseMove, { passive: true });
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, [hasReducedMotion]);
+    return () => {
+      if (rafId !== null) cancelAnimationFrame(rafId);
+      window.removeEventListener('mousemove', handleMouseMove);
+    };
+  }, [mouseX, mouseY]);
 
   const { scrollY } = useScroll();
   const heroImageParallax = useTransform(scrollY, [0, 600], [0, 50]);
@@ -51,13 +65,12 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
       >
         {/* Parallax Hero Image Container */}
         <motion.div
-          className="relative w-full h-full flex items-center justify-center"
-          animate={{
-            x: hasReducedMotion ? 0 : mousePosition.x * 6,
-            y: hasReducedMotion ? 0 : mousePosition.y * 6,
+          className="relative w-full h-full flex items-center justify-center will-change-transform"
+          style={{
+            x: springX,
+            y: springY,
             scale: 1.02,
           }}
-          transition={{ type: 'spring', damping: 35, stiffness: 90 }}
         >
           <div className="absolute inset-0 bg-gradient-to-t from-[#08080a] via-[#08080a]/65 to-transparent z-10" />
           <div className="absolute inset-0 bg-gradient-to-r from-[#08080a] via-transparent to-[#08080a] z-10" />

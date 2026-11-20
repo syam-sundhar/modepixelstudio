@@ -1,17 +1,15 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Send, 
-  Upload, 
   CheckCircle, 
   MessageSquare, 
   Mail, 
   Instagram, 
   Copy, 
   Check, 
-  Sparkles, 
-  FileCheck,
-  X
+  Sparkles,
+  Link2
 } from 'lucide-react';
 import { AGENCY_CONFIG } from '../data/config';
 
@@ -35,12 +33,10 @@ export const EnquirySection: React.FC<EnquirySectionProps> = ({
     driveLink: '',
   });
 
-  const [uploadedFiles, setUploadedFiles] = useState<{ name: string; size: string; previewUrl: string }[]>([]);
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [copiedEmail, setCopiedEmail] = useState(false);
-  const fileInputRef = useRef<HTMLInputElement>(null);
 
   React.useEffect(() => {
     if (initialCategory) {
@@ -67,23 +63,6 @@ export const EnquirySection: React.FC<EnquirySectionProps> = ({
     return Object.keys(errs).length === 0;
   };
 
-  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files;
-    if (!files) return;
-
-    const newFiles = Array.from(files).map((file) => ({
-      name: file.name,
-      size: `${(file.size / (1024 * 1024)).toFixed(1)} MB`,
-      previewUrl: URL.createObjectURL(file),
-    }));
-
-    setUploadedFiles((prev) => [...prev, ...newFiles]);
-  };
-
-  const removeFile = (index: number) => {
-    setUploadedFiles((prev) => prev.filter((_, i) => i !== index));
-  };
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!validate()) return;
@@ -94,7 +73,6 @@ export const EnquirySection: React.FC<EnquirySectionProps> = ({
       id: `MPX-${Date.now().toString().slice(-6)}`,
       timestamp: new Date().toISOString(),
       ...formData,
-      uploadedFileNames: uploadedFiles.map((f) => f.name),
     };
 
     try {
@@ -108,7 +86,7 @@ export const EnquirySection: React.FC<EnquirySectionProps> = ({
     setTimeout(() => {
       setIsSubmitting(false);
       setIsSubmitted(true);
-    }, 800);
+    }, 600);
   };
 
   const handleCopyEmail = () => {
@@ -118,11 +96,8 @@ export const EnquirySection: React.FC<EnquirySectionProps> = ({
   };
 
   const generateWhatsAppDirectLink = () => {
-    const fileNote = uploadedFiles.length > 0
-      ? `\n\n📷 Reference Photos Selected (${uploadedFiles.length}):\n${uploadedFiles.map((f) => `• ${f.name}`).join('\n')}\n(I will attach these photos directly in this chat)`
-      : '';
     const driveNote = formData.driveLink.trim()
-      ? `\n\n📁 Cloud Drive / WeTransfer Link:\n${formData.driveLink.trim()}`
+      ? `\n\n📁 Assets Link (Drive/Cloud):\n${formData.driveLink.trim()}`
       : '';
 
     const text = encodeURIComponent(
@@ -131,19 +106,15 @@ export const EnquirySection: React.FC<EnquirySectionProps> = ({
       `Images: ${formData.imagesCount}\n` +
       `Budget: ${formData.budget}\n` +
       `Description: ${formData.description || 'Looking forward to discussing the visuals.'}` +
-      driveNote +
-      fileNote
+      driveNote
     );
     return `https://wa.me/${AGENCY_CONFIG.whatsappNumber}?text=${text}`;
   };
 
   const generateMailtoLink = () => {
     const subject = encodeURIComponent(`Project Enquiry — ${formData.brandName || 'Fashion Campaign'} [MODEPIXEL]`);
-    const fileNote = uploadedFiles.length > 0
-      ? `\nReference Photos Attached (${uploadedFiles.length}):\n${uploadedFiles.map((f) => `• ${f.name} (${f.size})`).join('\n')}\n[Note: Please remember to attach your ${uploadedFiles.length} photo(s) to this email before sending]\n`
-      : '';
     const driveNote = formData.driveLink.trim()
-      ? `Cloud Drive / WeTransfer Link:\n${formData.driveLink.trim()}\n\n`
+      ? `Reference Assets Link:\n${formData.driveLink.trim()}\n\n`
       : '';
 
     const body = encodeURIComponent(
@@ -154,8 +125,7 @@ export const EnquirySection: React.FC<EnquirySectionProps> = ({
       `Images: ${formData.imagesCount}\n` +
       `Budget: ${formData.budget}\n\n` +
       `Project Brief:\n${formData.description}\n\n` +
-      driveNote +
-      fileNote
+      driveNote
     );
     return `mailto:${AGENCY_CONFIG.email}?subject=${subject}&body=${body}`;
   };
@@ -312,73 +282,22 @@ export const EnquirySection: React.FC<EnquirySectionProps> = ({
                     {errors.description && <p className="font-mono text-[11px] text-red-400 mt-1">{errors.description}</p>}
                   </div>
 
-                  {/* Reference Image Upload (Supported) */}
+                  {/* Reference Image Link Upload Field Only */}
                   <div>
-                    <label className="block font-mono text-xs text-[#a1a1aa] uppercase tracking-wider mb-2">
-                      PRODUCT REFERENCES / GARMENT PHOTOS (OPTIONAL)
+                    <label className="flex items-center space-x-1.5 font-mono text-xs text-[#a1a1aa] uppercase tracking-wider mb-2">
+                      <Link2 className="w-3.5 h-3.5 text-[#d4ff00]" />
+                      <span>PRODUCT REFERENCES / CLOUD ASSETS LINK (OPTIONAL)</span>
                     </label>
-                    <div
-                      onClick={() => fileInputRef.current?.click()}
-                      className="border-2 border-dashed border-white/15 hover:border-[#d4ff00]/60 rounded-xl p-5 text-center cursor-pointer bg-white/[0.01] hover:bg-white/[0.03] transition-colors duration-240 ease-[cubic-bezier(0.22,1,0.36,1)]"
-                    >
-                      <input
-                        ref={fileInputRef}
-                        type="file"
-                        multiple
-                        accept="image/*,.pdf,.zip"
-                        onChange={handleFileUpload}
-                        className="hidden"
-                      />
-                      <Upload className="w-5 h-5 text-[#d4ff00] mx-auto mb-2" />
-                      <p className="font-mono text-xs text-[#e2e8f0]">
-                        Click or drag product reference images here
-                      </p>
-                      <p className="font-mono text-[10px] text-[#71717a] mt-1">
-                        PNG, JPG, WEBP, or ZIP up to 50MB (Front, back, fabric detail)
-                      </p>
-                    </div>
-
-                    {/* Uploaded Files Preview List */}
-                    {uploadedFiles.length > 0 && (
-                      <div className="mt-3 space-y-2">
-                        {uploadedFiles.map((file, idx) => (
-                          <div
-                            key={idx}
-                            className="flex items-center justify-between p-2.5 rounded-lg bg-white/[0.04] border border-white/[0.08] text-xs font-mono"
-                          >
-                            <div className="flex items-center space-x-2">
-                              <FileCheck className="w-4 h-4 text-[#d4ff00]" />
-                              <span className="text-white max-w-[200px] truncate">{file.name}</span>
-                              <span className="text-[#71717a]">({file.size})</span>
-                            </div>
-                            <button
-                              type="button"
-                              onClick={() => removeFile(idx)}
-                              className="text-zinc-500 hover:text-red-400 p-1 transition-colors"
-                            >
-                              <X className="w-3.5 h-3.5" />
-                            </button>
-                          </div>
-                        ))}
-                      </div>
-                    )}
-
-                    {/* Cloud Link Input (Drive, WeTransfer, Dropbox) */}
-                    <div className="mt-4 pt-3 border-t border-white/[0.06]">
-                      <label className="block font-mono text-[11px] text-[#a1a1aa] uppercase tracking-wider mb-2">
-                        OR GOOGLE DRIVE / WETRANSFER / CLOUD LINK (OPTIONAL)
-                      </label>
-                      <input
-                        type="url"
-                        value={formData.driveLink}
-                        onChange={(e) => setFormData({ ...formData, driveLink: e.target.value })}
-                        placeholder="https://drive.google.com/... or wetransfer.com/..."
-                        className="w-full px-4 py-3 rounded-xl bg-white/[0.03] border border-white/10 text-white font-sans text-xs focus:border-[#d4ff00] focus:outline-none transition-colors duration-200"
-                      />
-                      <span className="font-mono text-[10px] text-[#71717a] mt-1 block">
-                        Recommended for large lookbooks, RAW camera archives, or multi-angle ZIP folders.
-                      </span>
-                    </div>
+                    <input
+                      type="url"
+                      value={formData.driveLink}
+                      onChange={(e) => setFormData({ ...formData, driveLink: e.target.value })}
+                      placeholder="Paste Google Drive, Dropbox, or WeTransfer link..."
+                      className="w-full px-4 py-3.5 rounded-xl bg-white/[0.03] border border-white/10 text-white font-sans text-sm focus:border-[#d4ff00] focus:outline-none transition-colors duration-200"
+                    />
+                    <span className="font-mono text-[10px] text-[#71717a] mt-1.5 block leading-relaxed">
+                      Paste your Google Drive, Dropbox, or WeTransfer link containing garment flats, lookbooks, or inspiration photos.
+                    </span>
                   </div>
 
                   {/* Submit Button with Smooth Eased Hover */}
@@ -425,27 +344,15 @@ export const EnquirySection: React.FC<EnquirySectionProps> = ({
                     </p>
                   </div>
 
-                  {/* Reference Files Direct Attachment Notice */}
-                  {uploadedFiles.length > 0 && (
-                    <div className="p-4 rounded-xl bg-white/[0.03] border border-[#d4ff00]/30 text-left w-full max-w-md">
-                      <div className="flex items-start space-x-3">
-                        <FileCheck className="w-5 h-5 text-[#d4ff00] shrink-0 mt-0.5" />
-                        <div>
-                          <span className="font-mono text-xs text-[#d4ff00] font-semibold uppercase block">
-                            {uploadedFiles.length} REFERENCE PHOTO{uploadedFiles.length > 1 ? 'S' : ''} READY
-                          </span>
-                          <p className="font-sans text-xs text-[#c5c5d0] mt-1 leading-relaxed">
-                            Web browsers restrict websites from auto-attaching local files to external apps. When you tap below, your brief is pre-filled—simply attach your {uploadedFiles.length} photo{uploadedFiles.length > 1 ? 's' : ''} directly in WhatsApp or email!
-                          </p>
-                          <div className="mt-2 text-[10px] font-mono text-[#a1a1aa] flex flex-wrap gap-1">
-                            {uploadedFiles.map((f, i) => (
-                              <span key={i} className="px-2 py-0.5 rounded bg-black/60 border border-white/10">
-                                {f.name}
-                              </span>
-                            ))}
-                          </div>
-                        </div>
-                      </div>
+                  {/* Reference Link Confirmation */}
+                  {formData.driveLink.trim() && (
+                    <div className="p-3.5 rounded-xl bg-white/[0.03] border border-[#d4ff00]/30 text-left w-full max-w-md">
+                      <span className="font-mono text-[10px] tracking-wider text-[#d4ff00] font-semibold uppercase block">
+                        REFERENCE ASSET LINK INCLUDED
+                      </span>
+                      <p className="font-mono text-xs text-white/90 truncate mt-1">
+                        {formData.driveLink.trim()}
+                      </p>
                     </div>
                   )}
 
@@ -483,7 +390,6 @@ export const EnquirySection: React.FC<EnquirySectionProps> = ({
                         description: '',
                         driveLink: '',
                       });
-                      setUploadedFiles([]);
                     }}
                     className="font-mono text-xs text-[#71717a] hover:text-white transition-colors duration-200 underline pt-2"
                   >

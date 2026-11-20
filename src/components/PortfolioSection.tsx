@@ -86,13 +86,13 @@ export const PortfolioSection: React.FC<PortfolioSectionProps> = ({
                 <div
                   data-cursor="project"
                   onClick={() => onSelectProject(project)}
-                  className="relative w-full aspect-[4/5] rounded-2xl overflow-hidden bg-[#0c0c10] border border-white/[0.08] transition-all duration-350 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:border-[#d4ff00]/45 group-hover:-translate-y-1 group-hover:shadow-[0_12px_36px_rgba(0,0,0,0.6)] cursor-pointer select-none"
+                  className="relative w-full aspect-[4/5] rounded-2xl overflow-hidden bg-[#0c0c10] border border-white/[0.08] transition-[border-color,transform,box-shadow] duration-350 ease-[cubic-bezier(0.22,1,0.36,1)] transform-gpu will-change-transform group-hover:border-[#d4ff00]/45 group-hover:-translate-y-1 group-hover:shadow-[0_12px_36px_rgba(0,0,0,0.6)] cursor-pointer select-none"
                 >
                   {/* Primary Cover Image */}
                   <img
                     src={project.coverImage}
                     alt={project.title}
-                    className="absolute inset-0 w-full h-full object-cover object-center pointer-events-none transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.03]"
+                    className="absolute inset-0 w-full h-full object-cover object-center pointer-events-none transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] transform-gpu will-change-transform group-hover:scale-[1.03]"
                     loading="lazy"
                     decoding="async"
                   />
@@ -101,7 +101,7 @@ export const PortfolioSection: React.FC<PortfolioSectionProps> = ({
                   <img
                     src={project.secondaryPreviewImage}
                     alt={`${project.title} Preview`}
-                    className="absolute inset-0 w-full h-full object-cover object-center pointer-events-none opacity-0 group-hover:opacity-100 transition-all duration-600 ease-[cubic-bezier(0.22,1,0.36,1)] scale-[1.04] group-hover:scale-100"
+                    className="absolute inset-0 w-full h-full object-cover object-center pointer-events-none opacity-0 group-hover:opacity-100 transition-[opacity,transform] duration-600 ease-[cubic-bezier(0.22,1,0.36,1)] scale-[1.04] group-hover:scale-100 transform-gpu will-change-transform"
                     loading="lazy"
                     decoding="async"
                   />

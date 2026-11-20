@@ -169,7 +169,7 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({
                   return (
                     <div
                       key={service.id}
-                      className={`absolute inset-0 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] pointer-events-none ${
+                      className={`absolute inset-0 transition-[opacity,transform] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] transform-gpu will-change-transform pointer-events-none ${
                         isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-105'
                       }`}
                     >
