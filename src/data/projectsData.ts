@@ -10,8 +10,8 @@ export const PROJECTS_DATA: Project[] = [
     tag: 'Streetwear Campaign',
     season: 'Autumn / Winter',
     year: '2026',
-    coverImage: '/images/projects/project-01/hero-front.png',
-    secondaryPreviewImage: '/images/projects/project-01/lifestyle-sidewalk.png',
+    coverImage: '/images/projects/project-01/hero-front.webp',
+    secondaryPreviewImage: '/images/projects/project-01/lifestyle-sidewalk.webp',
     statusTag: 'Self-Initiated Concept Campaign',
     clientType: 'Contemporary D2C Apparel Brand',
     creativeConcept: 'Demonstrate how an oversized vintage graphic T-shirt with heavy typography can be elevated from flat e-commerce photos into an international streetwear lookbook, capturing urban attitude, natural sunlight, and tactile fabric drape without booking a physical European on-location crew.',
@@ -26,8 +26,8 @@ export const PROJECTS_DATA: Project[] = [
       'Close-up Dog Tag & Collar Stitching Detail'
     ],
     beforeAfterComparison: {
-      beforeUrl: '/images/projects/project-01/reference-raw.jpg',
-      afterUrl: '/images/projects/project-01/hero-front.png',
+      beforeUrl: '/images/projects/project-01/reference-raw.webp',
+      afterUrl: '/images/projects/project-01/hero-front.webp',
       beforeLabel: 'Client Product Reference (E-Commerce Flat)',
       afterLabel: 'MODEPIXEL Final AI Campaign Production',
       caption: 'From a standard e-commerce garment flat into a high-fashion, mood-driven European street editorial.'
@@ -35,7 +35,7 @@ export const PROJECTS_DATA: Project[] = [
     gallery: [
       {
         id: 'p1-1',
-        url: '/images/projects/project-01/hero-front.png',
+        url: '/images/projects/project-01/hero-front.webp',
         title: 'Front Hero Portrait',
         caption: 'Minimalist studio framing focusing on neckline tension, garment proportion, and drop-shoulder drape.',
         category: 'hero',
@@ -44,7 +44,7 @@ export const PROJECTS_DATA: Project[] = [
       },
       {
         id: 'p1-2',
-        url: '/images/projects/project-01/lifestyle-sidewalk.png',
+        url: '/images/projects/project-01/lifestyle-sidewalk.webp',
         title: 'Sunlit Sidewalk Editorial',
         caption: 'Dynamic outdoor lookbook framing with golden raking light across chest graphic typography.',
         category: 'lifestyle',
@@ -53,7 +53,7 @@ export const PROJECTS_DATA: Project[] = [
       },
       {
         id: 'p1-3',
-        url: '/images/projects/project-01/street-sunglasses.png',
+        url: '/images/projects/project-01/street-sunglasses.webp',
         title: 'European Street Lifestyle',
         caption: '35mm focal perspective on cobblestone architecture capturing contemporary editorial styling.',
         category: 'street',
@@ -62,7 +62,7 @@ export const PROJECTS_DATA: Project[] = [
       },
       {
         id: 'p1-4',
-        url: '/images/projects/project-01/back-view.png',
+        url: '/images/projects/project-01/back-view.webp',
         title: 'Studio Back Graphic Perspective',
         caption: 'Back graphic integrity: "Don’t Give Up" typography placement faithfully rendered on heavy cotton jersey.',
         category: 'back',
@@ -73,14 +73,14 @@ export const PROJECTS_DATA: Project[] = [
     detailShots: [
       {
         id: 'p1-d1',
-        url: '/images/projects/project-01/portrait-detail.png',
+        url: '/images/projects/project-01/portrait-detail.webp',
         title: 'Accessory & Collar Detail',
         caption: 'Charcoal streetwear portrait with dog tag chain, showing ribbed collar construction and natural skin texture.',
         category: 'detail'
       },
       {
         id: 'p1-d2',
-        url: '/images/projects/project-01/reference-concept.png',
+        url: '/images/projects/project-01/reference-concept.webp',
         title: 'Fitting & Model Try-On Study',
         caption: 'Iterative virtual styling checkpoint verifying shoulder fit, drop length, and torso silhouette alignment.',
         category: 'composition'
@@ -96,8 +96,8 @@ export const PROJECTS_DATA: Project[] = [
     tag: 'Plush Outerwear Campaign',
     season: 'Fall / Winter Capsule',
     year: '2026',
-    coverImage: '/images/projects/project-02/hero-front.png',
-    secondaryPreviewImage: '/images/projects/project-02/texture-macro.png',
+    coverImage: '/images/projects/project-02/hero-front.webp',
+    secondaryPreviewImage: '/images/projects/project-02/texture-macro.webp',
     statusTag: 'Self-Initiated Concept Campaign',
     clientType: 'Premium Independent Knitwear Label',
     creativeConcept: 'Elevate a plush gradient fleece hoodie by spotlighting tactile sensorial fleece micro-textures, delicate icy blue-to-white ombré color transitions, and relaxed high-fashion silhouette styling under controlled cold-spectrum studio illumination.',
@@ -112,8 +112,8 @@ export const PROJECTS_DATA: Project[] = [
       'Full-Length Campaign Editorial Composition'
     ],
     beforeAfterComparison: {
-      beforeUrl: '/images/projects/project-02/reference-raw.jpg',
-      afterUrl: '/images/projects/project-02/hero-front.png',
+      beforeUrl: '/images/projects/project-02/reference-raw.webp',
+      afterUrl: '/images/projects/project-02/hero-front.webp',
       beforeLabel: 'Client Garment Photo (Raw Reference)',
       afterLabel: 'MODEPIXEL Campaign Production',
       caption: 'Translating a flat product snapshot into a tactile, hyper-realistic plush knitwear hero photograph.'
@@ -121,7 +121,7 @@ export const PROJECTS_DATA: Project[] = [
     gallery: [
       {
         id: 'p2-1',
-        url: '/images/projects/project-02/hero-front.png',
+        url: '/images/projects/project-02/hero-front.webp',
         title: 'Plush Blue Ombré Front Portrait',
         caption: 'Atmospheric front-facing portrait capturing plush fleece density, kangaroo pocket ribbing, and soft ombré gradient.',
         category: 'hero',
@@ -130,7 +130,7 @@ export const PROJECTS_DATA: Project[] = [
       },
       {
         id: 'p2-2',
-        url: '/images/projects/project-02/back-view.png',
+        url: '/images/projects/project-02/back-view.webp',
         title: 'Gradient Back Silhouette',
         caption: 'Back view emphasizing the seamless ombre transition from icy white shoulder yoke to sky-blue waistband.',
         category: 'back',
@@ -139,7 +139,7 @@ export const PROJECTS_DATA: Project[] = [
       },
       {
         id: 'p2-3',
-        url: '/images/projects/project-02/urban-portrait.png',
+        url: '/images/projects/project-02/urban-portrait.webp',
         title: 'Modern Urban Character',
         caption: 'Contemporary model styling matching the garment with minimalist tailored accessories.',
         category: 'lifestyle',
@@ -148,7 +148,7 @@ export const PROJECTS_DATA: Project[] = [
       },
       {
         id: 'p2-4',
-        url: '/images/projects/project-02/campaign-full.png',
+        url: '/images/projects/project-02/campaign-full.webp',
         title: 'Full-Length Campaign Editorial',
         caption: 'Cinematic full-body presentation balancing architectural proportion and luxury streetwear presence.',
         category: 'street',
@@ -159,14 +159,14 @@ export const PROJECTS_DATA: Project[] = [
     detailShots: [
       {
         id: 'p2-d1',
-        url: '/images/projects/project-02/texture-macro.png',
+        url: '/images/projects/project-02/texture-macro.webp',
         title: 'Icy Blue-to-White Fiber Macro',
         caption: 'Extreme close-up revealing individual brushed sherpa yarn loops, color depth, and tactile plush softness.',
         category: 'macro'
       },
       {
         id: 'p2-d2',
-        url: '/images/projects/project-02/reference-concept.png',
+        url: '/images/projects/project-02/reference-concept.webp',
         title: 'Garment Form & Volumetric Study',
         caption: 'Pre-production volumetric evaluation checking hood drop, fabric weight simulation, and seam integrity.',
         category: 'detail'
@@ -182,8 +182,8 @@ export const PROJECTS_DATA: Project[] = [
     tag: 'Technical Sneaker Campaign',
     season: 'Spring / Summer Lookbook',
     year: '2026',
-    coverImage: '/images/projects/project-03/hero-sneaker.jpg',
-    secondaryPreviewImage: '/images/projects/project-03/sole-detail.jpg',
+    coverImage: '/images/projects/project-03/hero-sneaker.webp',
+    secondaryPreviewImage: '/images/projects/project-03/sole-detail.webp',
     statusTag: 'Self-Initiated Concept Campaign',
     clientType: 'High-Performance Luxury Sneaker House',
     creativeConcept: 'Present a sculpted luxury sneaker as an industrial design masterpiece, contrasting volcanic basalt stone plinths with precision titanium hardware, ballistic mesh textures, and dynamic sole grip architecture.',
@@ -199,7 +199,7 @@ export const PROJECTS_DATA: Project[] = [
     gallery: [
       {
         id: 'p3-1',
-        url: '/images/projects/project-03/hero-sneaker.jpg',
+        url: '/images/projects/project-03/hero-sneaker.webp',
         title: 'Architectural Basalt Plinth Hero',
         caption: 'Low-angle sculptural hero composition capturing upper mesh geometry, metallic hardware, and sole cantilever.',
         category: 'hero',
@@ -208,7 +208,7 @@ export const PROJECTS_DATA: Project[] = [
       },
       {
         id: 'p3-2',
-        url: '/images/projects/project-03/sole-detail.jpg',
+        url: '/images/projects/project-03/sole-detail.webp',
         title: 'Outsole & Tread Architecture',
         caption: 'Tread grip pods and carbon-arch bridge illuminated by precision raking rim lights.',
         category: 'sole',
@@ -217,7 +217,7 @@ export const PROJECTS_DATA: Project[] = [
       },
       {
         id: 'p3-3',
-        url: '/images/projects/project-03/onfoot-lifestyle.jpg',
+        url: '/images/projects/project-03/onfoot-lifestyle.webp',
         title: 'On-Foot Streetwear Lifestyle',
         caption: 'Reflective wet asphalt editorial capture pairing the technical sneaker with relaxed tailored trousers.',
         category: 'lifestyle',
@@ -228,7 +228,7 @@ export const PROJECTS_DATA: Project[] = [
     detailShots: [
       {
         id: 'p3-d1',
-        url: '/images/projects/project-03/material-stitching.jpg',
+        url: '/images/projects/project-03/material-stitching.webp',
         title: 'Full-Grain Leather & Topstitching',
         caption: 'Macro lens examination of double-stitched leather panels, ballistic mesh weave, and polished titanium eyelets.',
         category: 'detail'
@@ -244,8 +244,8 @@ export const PROJECTS_DATA: Project[] = [
     tag: 'Luxury Beauty Campaign',
     season: 'Signature Product Launch',
     year: '2026',
-    coverImage: '/images/projects/project-04/hero-serum.jpg',
-    secondaryPreviewImage: '/images/projects/project-04/ingredients-composition.jpg',
+    coverImage: '/images/projects/project-04/hero-serum.webp',
+    secondaryPreviewImage: '/images/projects/project-04/ingredients-composition.webp',
     statusTag: 'Self-Initiated Concept Campaign',
     clientType: 'Prestige Botanical Skincare Brand',
     creativeConcept: 'Craft an ethereal, hyper-tactile beauty campaign communicating organic potency through dark basalt stone reflections, floating botanical elements, golden honey-toned lighting, and microscopic liquid refraction.',
@@ -261,7 +261,7 @@ export const PROJECTS_DATA: Project[] = [
     gallery: [
       {
         id: 'p4-1',
-        url: '/images/projects/project-04/hero-serum.jpg',
+        url: '/images/projects/project-04/hero-serum.webp',
         title: 'Product Hero on Obsidian Plinth',
         caption: 'Amber glass luminescence and crisp micro-droplets on reflective dark basalt stone.',
         category: 'hero',
@@ -270,7 +270,7 @@ export const PROJECTS_DATA: Project[] = [
       },
       {
         id: 'p4-2',
-        url: '/images/projects/project-04/ingredients-composition.jpg',
+        url: '/images/projects/project-04/ingredients-composition.webp',
         title: 'Botanical & Mineral Origin',
         caption: 'Stylized pairing with golden immortelle flowers and raw amber resin under subtle atmospheric mist.',
         category: 'composition',
@@ -279,7 +279,7 @@ export const PROJECTS_DATA: Project[] = [
       },
       {
         id: 'p4-3',
-        url: '/images/projects/project-04/editorial-model.jpg',
+        url: '/images/projects/project-04/editorial-model.webp',
         title: 'Editorial Campaign Portrait',
         caption: 'High-fashion model portrait exhibiting radiant dewy skin and intimate product interaction.',
         category: 'lifestyle',
@@ -290,7 +290,7 @@ export const PROJECTS_DATA: Project[] = [
     detailShots: [
       {
         id: 'p4-d1',
-        url: '/images/projects/project-04/macro-dropper.jpg',
+        url: '/images/projects/project-04/macro-dropper.webp',
         title: 'Pipette Droplet Viscosity Macro',
         caption: 'Extreme optical magnification capturing golden liquid surface tension, micro bubbles, and crystal refraction.',
         category: 'macro'

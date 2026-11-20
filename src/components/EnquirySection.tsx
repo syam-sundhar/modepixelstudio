@@ -32,6 +32,7 @@ export const EnquirySection: React.FC<EnquirySectionProps> = ({
     imagesCount: '10 Images (Brand Collection)',
     budget: initialBudget || '₹1,799 (Brand Collection)',
     description: '',
+    driveLink: '',
   });
 
   const [uploadedFiles, setUploadedFiles] = useState<{ name: string; size: string; previewUrl: string }[]>([]);
@@ -107,7 +108,7 @@ export const EnquirySection: React.FC<EnquirySectionProps> = ({
     setTimeout(() => {
       setIsSubmitting(false);
       setIsSubmitted(true);
-    }, 1000);
+    }, 800);
   };
 
   const handleCopyEmail = () => {
@@ -117,18 +118,34 @@ export const EnquirySection: React.FC<EnquirySectionProps> = ({
   };
 
   const generateWhatsAppDirectLink = () => {
+    const fileNote = uploadedFiles.length > 0
+      ? `\n\n📷 Reference Photos Selected (${uploadedFiles.length}):\n${uploadedFiles.map((f) => `• ${f.name}`).join('\n')}\n(I will attach these photos directly in this chat)`
+      : '';
+    const driveNote = formData.driveLink.trim()
+      ? `\n\n📁 Cloud Drive / WeTransfer Link:\n${formData.driveLink.trim()}`
+      : '';
+
     const text = encodeURIComponent(
       `Hi ${AGENCY_CONFIG.founder}! I've submitted a campaign enquiry for ${formData.brandName || 'my brand'}.\n` +
       `Product: ${formData.productCategory}\n` +
       `Images: ${formData.imagesCount}\n` +
       `Budget: ${formData.budget}\n` +
-      `Description: ${formData.description || 'Looking forward to discussing the visuals.'}`
+      `Description: ${formData.description || 'Looking forward to discussing the visuals.'}` +
+      driveNote +
+      fileNote
     );
     return `https://wa.me/${AGENCY_CONFIG.whatsappNumber}?text=${text}`;
   };
 
   const generateMailtoLink = () => {
     const subject = encodeURIComponent(`Project Enquiry — ${formData.brandName || 'Fashion Campaign'} [MODEPIXEL]`);
+    const fileNote = uploadedFiles.length > 0
+      ? `\nReference Photos Attached (${uploadedFiles.length}):\n${uploadedFiles.map((f) => `• ${f.name} (${f.size})`).join('\n')}\n[Note: Please remember to attach your ${uploadedFiles.length} photo(s) to this email before sending]\n`
+      : '';
+    const driveNote = formData.driveLink.trim()
+      ? `Cloud Drive / WeTransfer Link:\n${formData.driveLink.trim()}\n\n`
+      : '';
+
     const body = encodeURIComponent(
       `Name: ${formData.name}\n` +
       `Brand: ${formData.brandName}\n` +
@@ -136,7 +153,9 @@ export const EnquirySection: React.FC<EnquirySectionProps> = ({
       `Category: ${formData.productCategory}\n` +
       `Images: ${formData.imagesCount}\n` +
       `Budget: ${formData.budget}\n\n` +
-      `Project Brief:\n${formData.description}\n`
+      `Project Brief:\n${formData.description}\n\n` +
+      driveNote +
+      fileNote
     );
     return `mailto:${AGENCY_CONFIG.email}?subject=${subject}&body=${body}`;
   };
@@ -343,6 +362,23 @@ export const EnquirySection: React.FC<EnquirySectionProps> = ({
                         ))}
                       </div>
                     )}
+
+                    {/* Cloud Link Input (Drive, WeTransfer, Dropbox) */}
+                    <div className="mt-4 pt-3 border-t border-white/[0.06]">
+                      <label className="block font-mono text-[11px] text-[#a1a1aa] uppercase tracking-wider mb-2">
+                        OR GOOGLE DRIVE / WETRANSFER / CLOUD LINK (OPTIONAL)
+                      </label>
+                      <input
+                        type="url"
+                        value={formData.driveLink}
+                        onChange={(e) => setFormData({ ...formData, driveLink: e.target.value })}
+                        placeholder="https://drive.google.com/... or wetransfer.com/..."
+                        className="w-full px-4 py-3 rounded-xl bg-white/[0.03] border border-white/10 text-white font-sans text-xs focus:border-[#d4ff00] focus:outline-none transition-colors duration-200"
+                      />
+                      <span className="font-mono text-[10px] text-[#71717a] mt-1 block">
+                        Recommended for large lookbooks, RAW camera archives, or multi-angle ZIP folders.
+                      </span>
+                    </div>
                   </div>
 
                   {/* Submit Button with Smooth Eased Hover */}
@@ -389,6 +425,30 @@ export const EnquirySection: React.FC<EnquirySectionProps> = ({
                     </p>
                   </div>
 
+                  {/* Reference Files Direct Attachment Notice */}
+                  {uploadedFiles.length > 0 && (
+                    <div className="p-4 rounded-xl bg-white/[0.03] border border-[#d4ff00]/30 text-left w-full max-w-md">
+                      <div className="flex items-start space-x-3">
+                        <FileCheck className="w-5 h-5 text-[#d4ff00] shrink-0 mt-0.5" />
+                        <div>
+                          <span className="font-mono text-xs text-[#d4ff00] font-semibold uppercase block">
+                            {uploadedFiles.length} REFERENCE PHOTO{uploadedFiles.length > 1 ? 'S' : ''} READY
+                          </span>
+                          <p className="font-sans text-xs text-[#c5c5d0] mt-1 leading-relaxed">
+                            Web browsers restrict websites from auto-attaching local files to external apps. When you tap below, your brief is pre-filled—simply attach your {uploadedFiles.length} photo{uploadedFiles.length > 1 ? 's' : ''} directly in WhatsApp or email!
+                          </p>
+                          <div className="mt-2 text-[10px] font-mono text-[#a1a1aa] flex flex-wrap gap-1">
+                            {uploadedFiles.map((f, i) => (
+                              <span key={i} className="px-2 py-0.5 rounded bg-black/60 border border-white/10">
+                                {f.name}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
                   {/* Immediate Action Buttons: WhatsApp & Direct Email */}
                   <div className="flex flex-col sm:flex-row gap-4 w-full max-w-md pt-4">
                     <a
@@ -421,6 +481,7 @@ export const EnquirySection: React.FC<EnquirySectionProps> = ({
                         imagesCount: '10 Images (Brand Collection)',
                         budget: '₹1,799 (Brand Collection)',
                         description: '',
+                        driveLink: '',
                       });
                       setUploadedFiles([]);
                     }}

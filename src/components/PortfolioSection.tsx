@@ -27,15 +27,15 @@ export const PortfolioSection: React.FC<PortfolioSectionProps> = ({
       });
 
   return (
-    <section id="portfolio" className="relative w-full py-24 md:py-32 bg-[#08080a] border-t border-white/[0.06]">
+    <section id="portfolio" className="relative w-full py-20 md:py-28 bg-[#08080a] border-t border-white/[0.06]">
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         
-        {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-14 md:mb-16 gap-8">
+        {/* Section Header - Minimal & Editorial */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 md:mb-16 gap-6">
           <div>
-            <div className="inline-flex items-center space-x-2 text-[#d4ff00] font-mono text-[10px] md:text-xs tracking-[0.25em] uppercase mb-4">
+            <div className="inline-flex items-center space-x-2 text-[#d4ff00] font-mono text-[10px] md:text-xs tracking-[0.25em] uppercase mb-3">
               <Sparkles className="w-3.5 h-3.5" />
-              <span>COMMERCIAL CAMPAIGN ARCHIVE</span>
+              <span>COMMERCIAL ARCHIVE</span>
             </div>
             <h2 className="font-editorial text-4xl sm:text-6xl md:text-7xl text-[#f7f7f5] leading-[0.95]">
               SELECTED<br />
@@ -43,18 +43,18 @@ export const PortfolioSection: React.FC<PortfolioSectionProps> = ({
             </h2>
           </div>
 
-          <div className="flex flex-col items-start md:items-end space-y-4">
-            <p className="max-w-sm text-sm text-[#9b9ba3] font-light md:text-right leading-relaxed">
-              Explore self-initiated concept campaigns demonstrating product fidelity across apparel, knitwear, footwear, and beauty.
+          <div className="flex flex-col items-start md:items-end space-y-3">
+            <p className="max-w-xs text-xs md:text-sm text-[#9b9ba3] font-light md:text-right leading-relaxed">
+              Commercial campaigns built directly from product references.
             </p>
 
-            {/* Filter Tabs with Smooth Easing */}
-            <div className="flex flex-wrap gap-2 pt-2">
+            {/* Filter Tabs */}
+            <div className="flex flex-wrap gap-2 pt-1">
               {categories.map((cat) => (
                 <button
                   key={cat}
                   onClick={() => setActiveCategory(cat)}
-                  className={`px-4 py-1.5 rounded-full font-mono text-[11px] tracking-wider uppercase transition-all duration-240 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                  className={`px-3.5 py-1.5 rounded-full font-mono text-[11px] tracking-wider uppercase transition-all duration-240 ease-[cubic-bezier(0.22,1,0.36,1)] ${
                     activeCategory === cat
                       ? 'bg-white text-black font-semibold shadow-[0_0_15px_rgba(255,255,255,0.2)]'
                       : 'bg-white/[0.04] text-[#9b9ba3] hover:text-white hover:bg-white/[0.08] border border-white/[0.05]'
@@ -67,7 +67,7 @@ export const PortfolioSection: React.FC<PortfolioSectionProps> = ({
           </div>
         </div>
 
-        {/* Asymmetric Exhibition Gallery */}
+        {/* Exhibition Gallery with Responsive Aspect Ratios & Reduced Text */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-10">
           {filteredProjects.map((project, index) => {
             const colSpanClass = 'lg:col-span-6';
@@ -82,18 +82,19 @@ export const PortfolioSection: React.FC<PortfolioSectionProps> = ({
                 transition={{ duration: 0.6, delay: index * 0.08, ease: [0.22, 1, 0.36, 1] }}
                 className={`${colSpanClass} flex flex-col group`}
               >
-                {/* Visual Card with Fluid & Cinematic Hover Crossfade */}
+                {/* Visual Card - Aspect 4/5 Standard Fashion Ratio */}
                 <div
                   data-cursor="project"
                   onClick={() => onSelectProject(project)}
-                  className="relative w-full aspect-[4/5] sm:aspect-[3/4] md:aspect-[4/5] rounded-2xl overflow-hidden bg-[#0c0c10] border border-white/[0.08] transition-all duration-350 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:border-[#d4ff00]/45 group-hover:-translate-y-1 group-hover:shadow-[0_12px_36px_rgba(0,0,0,0.6)] cursor-pointer select-none"
+                  className="relative w-full aspect-[4/5] rounded-2xl overflow-hidden bg-[#0c0c10] border border-white/[0.08] transition-all duration-350 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:border-[#d4ff00]/45 group-hover:-translate-y-1 group-hover:shadow-[0_12px_36px_rgba(0,0,0,0.6)] cursor-pointer select-none"
                 >
-                  {/* Primary Cover Image with Gentle Scale */}
+                  {/* Primary Cover Image */}
                   <img
                     src={project.coverImage}
                     alt={project.title}
                     className="absolute inset-0 w-full h-full object-cover object-center pointer-events-none transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.03]"
                     loading="lazy"
+                    decoding="async"
                   />
 
                   {/* Secondary Preview Image - Silky Smooth Crossfade on Hover */}
@@ -102,59 +103,53 @@ export const PortfolioSection: React.FC<PortfolioSectionProps> = ({
                     alt={`${project.title} Preview`}
                     className="absolute inset-0 w-full h-full object-cover object-center pointer-events-none opacity-0 group-hover:opacity-100 transition-all duration-600 ease-[cubic-bezier(0.22,1,0.36,1)] scale-[1.04] group-hover:scale-100"
                     loading="lazy"
+                    decoding="async"
                   />
 
                   {/* Subtle Cinematic Vignette */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent pointer-events-none" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/15 to-black/20 pointer-events-none" />
 
-                  {/* Top Badges */}
-                  <div className="absolute top-5 left-5 right-5 flex items-center justify-between pointer-events-none z-10">
-                    <span className="font-mono text-xs font-semibold tracking-widest text-[#d4ff00] bg-black/60 backdrop-blur-md px-3 py-1 rounded-full border border-white/10">
-                      PROJECT // {project.number}
+                  {/* Minimalist Top Bar */}
+                  <div className="absolute top-4 left-4 right-4 flex items-center justify-between pointer-events-none z-10">
+                    <span className="font-mono text-[11px] font-semibold tracking-wider text-[#d4ff00] bg-black/60 backdrop-blur-md px-3 py-1 rounded-full border border-white/10">
+                      {project.number}
                     </span>
 
-                    <span className="font-mono text-[10px] tracking-wider text-white/80 bg-black/60 backdrop-blur-md px-3 py-1 rounded-full border border-white/10 uppercase">
-                      {project.statusTag}
-                    </span>
+                    {project.beforeAfterComparison && (
+                      <span className="flex items-center space-x-1.5 px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/10 text-[9px] font-mono text-white/90">
+                        <SlidersHorizontal className="w-3 h-3 text-[#d4ff00]" />
+                        <span>BEFORE / AFTER</span>
+                      </span>
+                    )}
                   </div>
 
-                  {/* Before / After Available Indicator */}
-                  {project.beforeAfterComparison && (
-                    <div className="absolute top-16 left-5 z-10 pointer-events-none">
-                      <div className="flex items-center space-x-1.5 px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/10 text-[9px] font-mono text-[#e2e8f0]">
-                        <SlidersHorizontal className="w-3 h-3 text-[#d4ff00]" />
-                        <span>RAW VS FINAL INCLUDED</span>
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Bottom Information in Card */}
-                  <div className="absolute bottom-6 left-6 right-6 z-10 pointer-events-none flex items-end justify-between">
+                  {/* Bottom Minimal Info Overlay */}
+                  <div className="absolute bottom-5 left-5 right-5 z-10 pointer-events-none flex items-end justify-between">
                     <div>
-                      <span className="font-mono text-xs text-[#a1a1aa] tracking-widest uppercase block mb-1">
-                        {project.category}
+                      <span className="font-mono text-[10px] text-[#a1a1aa] tracking-widest uppercase block mb-1">
+                        {project.category.split('/')[0].trim()}
                       </span>
                       <h3 className="font-editorial text-2xl sm:text-3xl text-white group-hover:text-[#d4ff00] transition-colors duration-280 ease-[cubic-bezier(0.22,1,0.36,1)] leading-tight">
                         {project.title}
                       </h3>
                     </div>
 
-                    <div className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-white group-hover:bg-[#d4ff00] group-hover:text-black transition-all duration-280 ease-[cubic-bezier(0.22,1,0.36,1)] shrink-0">
+                    <div className="w-9 h-9 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-white group-hover:bg-[#d4ff00] group-hover:text-black transition-all duration-280 ease-[cubic-bezier(0.22,1,0.36,1)] shrink-0 ml-3">
                       <ArrowUpRight className="w-4 h-4 transition-transform duration-280 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                     </div>
                   </div>
                 </div>
 
-                {/* Sub-Card Details */}
-                <div className="mt-4 flex items-center justify-between px-1">
-                  <p className="font-mono text-xs text-[#71717a] line-clamp-1">
-                    {project.subtitle}
-                  </p>
+                {/* Sub-Card Details - Minimal 1-liner */}
+                <div className="mt-3 flex items-center justify-between px-1">
+                  <span className="font-mono text-xs text-[#71717a]">
+                    {project.season} · {project.year}
+                  </span>
                   <button
                     onClick={() => onSelectProject(project)}
-                    className="font-mono text-[11px] tracking-wider text-[#d4ff00] hover:text-white transition-colors duration-200 uppercase flex items-center space-x-1 shrink-0 ml-4 py-1"
+                    className="font-mono text-[11px] tracking-wider text-[#d4ff00] hover:text-white transition-colors duration-200 uppercase flex items-center space-x-1 py-1"
                   >
-                    <span>VIEW CASE STUDY</span>
+                    <span>CASE STUDY</span>
                     <Eye className="w-3 h-3" />
                   </button>
                 </div>
@@ -163,21 +158,19 @@ export const PortfolioSection: React.FC<PortfolioSectionProps> = ({
           })}
         </div>
 
-        {/* Portfolio Guarantee Statement */}
-        <div className="mt-16 p-6 md:p-8 rounded-2xl bg-white/[0.02] border border-white/[0.06] flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-          <div className="max-w-2xl">
-            <span className="font-mono text-[11px] tracking-widest text-[#d4ff00] uppercase block mb-1">
-              // ZERO STOCK IMAGERY GUARANTEE
-            </span>
-            <p className="font-sans text-xs sm:text-sm text-[#9b9ba3] leading-relaxed">
-              Every photograph shown in this exhibition represents self-initiated production testing or actual client references. We do not use stock photography templates or unverified synthetic mockups.
+        {/* Minimalist Bottom Guarantee Strip */}
+        <div className="mt-14 p-5 md:p-6 rounded-2xl bg-white/[0.02] border border-white/[0.06] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div className="flex items-center space-x-3">
+            <span className="w-2 h-2 rounded-full bg-[#d4ff00]" />
+            <p className="font-mono text-xs text-[#9b9ba3]">
+              ZERO STOCK IMAGERY — All visuals produced from physical references.
             </p>
           </div>
           <a
             href="#enquiry"
-            className="px-6 py-3 rounded-full border border-white/20 text-white font-mono text-xs tracking-wider uppercase hover:border-[#d4ff00] hover:text-[#d4ff00] hover:-translate-y-0.5 active:translate-y-0 transition-all duration-250 ease-[cubic-bezier(0.22,1,0.36,1)] whitespace-nowrap"
+            className="px-5 py-2.5 rounded-full border border-white/20 text-white font-mono text-[11px] tracking-wider uppercase hover:border-[#d4ff00] hover:text-[#d4ff00] transition-colors whitespace-nowrap"
           >
-            DISCUSS YOUR CAMPAIGN
+            DISCUSS YOUR PROJECT
           </a>
         </div>
 

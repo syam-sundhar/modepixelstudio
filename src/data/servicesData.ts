@@ -13,7 +13,7 @@ export const SERVICES_DATA: ServiceItem[] = [
       'Customizable model demographics, styling, and hairstyles',
       'High-resolution commercial print and digital master files'
     ],
-    previewImage: '/images/projects/project-01/hero-front.png',
+    previewImage: '/images/projects/project-01/hero-front.webp',
     aspectRatio: 'aspect-[4/5]',
     tags: ['Streetwear', 'High Fashion', 'Lookbooks', 'Model Casting']
   },
@@ -29,7 +29,7 @@ export const SERVICES_DATA: ServiceItem[] = [
       'Micro-macro detail and exploded component styling',
       'Seamless transparent PNG or custom studio backdrops'
     ],
-    previewImage: '/images/projects/project-04/hero-serum.jpg',
+    previewImage: '/images/projects/project-04/hero-serum.webp',
     aspectRatio: 'aspect-square',
     tags: ['Beauty & Skincare', 'Footwear', 'Luxury Goods', 'Hero Shots']
   },
@@ -45,7 +45,7 @@ export const SERVICES_DATA: ServiceItem[] = [
       'Contextual model interactions and natural candid styling',
       'Multi-platform social media crops and aspect ratios'
     ],
-    previewImage: '/images/projects/project-01/lifestyle-sidewalk.png',
+    previewImage: '/images/projects/project-01/lifestyle-sidewalk.webp',
     aspectRatio: 'aspect-[4/3]',
     tags: ['Editorial', 'Atmospheric', 'Urban Environments', 'Storytelling']
   },
@@ -61,7 +61,7 @@ export const SERVICES_DATA: ServiceItem[] = [
       'A/B creative variations across moods and lighting',
       'Color-graded for digital feeds, retargeting, and billboards'
     ],
-    previewImage: '/images/projects/project-04/ingredients-composition.jpg',
+    previewImage: '/images/projects/project-04/ingredients-composition.webp',
     aspectRatio: 'aspect-[3/4]',
     tags: ['Paid Media', 'Billboard Visuals', 'Campaign Drops', 'Art Direction']
   },
@@ -77,7 +77,7 @@ export const SERVICES_DATA: ServiceItem[] = [
       'Optimized web formats (WebP, AVIF) with fast load footprints',
       'Clean white, neutral grey, or custom brand backdrop presets'
     ],
-    previewImage: '/images/projects/project-02/back-view.png',
+    previewImage: '/images/projects/project-02/back-view.webp',
     aspectRatio: 'aspect-square',
     tags: ['High Volume', 'Color Accuracy', 'Shopify / D2C', 'Zero Fluff']
   }

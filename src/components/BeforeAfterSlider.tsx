@@ -50,7 +50,7 @@ export const BeforeAfterSlider: React.FC<BeforeAfterSliderProps> = ({
 
   return (
     <div className="w-full flex flex-col space-y-3">
-      {/* Visual Canvas Container */}
+      {/* Visual Canvas Container - Preserves Portrait Proportions */}
       <div
         ref={containerRef}
         data-cursor="drag"
@@ -61,13 +61,15 @@ export const BeforeAfterSlider: React.FC<BeforeAfterSliderProps> = ({
         onTouchStart={(e) => handleStart(e.touches[0].clientX)}
         onTouchEnd={handleEnd}
         onTouchMove={handleTouchMove}
-        className="relative w-full aspect-[4/5] sm:aspect-[16/10] md:aspect-[16/9] rounded-xl overflow-hidden select-none cursor-ew-resize bg-[#0d0d12] border border-white/[0.08] shadow-2xl"
+        className="relative w-full aspect-[4/5] max-h-[80vh] rounded-xl overflow-hidden select-none cursor-ew-resize bg-[#09090e] border border-white/[0.08] shadow-2xl"
       >
         {/* AFTER Image (Full background layer) */}
         <img
           src={afterUrl}
           alt={afterLabel}
-          className="absolute inset-0 w-full h-full object-cover object-center pointer-events-none"
+          className="absolute inset-0 w-full h-full object-contain sm:object-cover object-center pointer-events-none"
+          loading="lazy"
+          decoding="async"
         />
 
         {/* BEFORE Image (Clipped overlay layer) */}
@@ -78,7 +80,9 @@ export const BeforeAfterSlider: React.FC<BeforeAfterSliderProps> = ({
           <img
             src={beforeUrl}
             alt={beforeLabel}
-            className="absolute inset-0 w-full h-full object-cover object-center pointer-events-none filter contrast-[1.03]"
+            className="absolute inset-0 w-full h-full object-contain sm:object-cover object-center pointer-events-none"
+            loading="lazy"
+            decoding="async"
           />
         </div>
 

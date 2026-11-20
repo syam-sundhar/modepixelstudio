@@ -63,10 +63,11 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           <div className="absolute inset-0 bg-gradient-to-r from-[#08080a] via-transparent to-[#08080a] z-10" />
           
           <img
-            src="/images/projects/project-01/hero-front.png"
+            src="/images/projects/project-01/hero-front.webp"
             alt="MODEPIXEL Commercial AI Fashion Campaign Visual"
-            className="w-full h-full object-cover object-center filter brightness-[0.72] contrast-[1.08] saturate-[0.95]"
+            className="w-full h-full object-cover object-top sm:object-center filter brightness-[0.72] contrast-[1.08] saturate-[0.95]"
             loading="eager"
+            decoding="async"
           />
         </motion.div>
       </motion.div>

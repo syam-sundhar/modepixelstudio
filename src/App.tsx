@@ -26,6 +26,14 @@ export const App: React.FC = () => {
 
   const handleSelectProject = (project: Project) => {
     setSelectedProject(project);
+    window.history.pushState({ modal: project.id }, '', `#${project.id}`);
+  };
+
+  const handleCloseProject = () => {
+    setSelectedProject(null);
+    if (window.location.hash.startsWith('#project-')) {
+      window.history.pushState(null, '', window.location.pathname + window.location.search);
+    }
   };
 
   const handleNavigateProject = (direction: 'next' | 'prev') => {
@@ -33,14 +41,32 @@ export const App: React.FC = () => {
     const currentIndex = PROJECTS_DATA.findIndex((p) => p.id === selectedProject.id);
     if (currentIndex === -1) return;
 
-    if (direction === 'next') {
-      const nextIndex = (currentIndex + 1) % PROJECTS_DATA.length;
-      setSelectedProject(PROJECTS_DATA[nextIndex]);
-    } else {
-      const prevIndex = (currentIndex - 1 + PROJECTS_DATA.length) % PROJECTS_DATA.length;
-      setSelectedProject(PROJECTS_DATA[prevIndex]);
-    }
+    const newIndex = direction === 'next'
+      ? (currentIndex + 1) % PROJECTS_DATA.length
+      : (currentIndex - 1 + PROJECTS_DATA.length) % PROJECTS_DATA.length;
+    const nextProj = PROJECTS_DATA[newIndex];
+    setSelectedProject(nextProj);
+    window.history.replaceState({ modal: nextProj.id }, '', `#${nextProj.id}`);
   };
+
+  React.useEffect(() => {
+    const handlePopState = () => {
+      const hash = window.location.hash.replace('#', '');
+      const matched = PROJECTS_DATA.find((p) => p.id === hash);
+      setSelectedProject(matched || null);
+    };
+
+    window.addEventListener('popstate', handlePopState);
+
+    // Initial load check if URL already has #project-xx
+    const initialHash = window.location.hash.replace('#', '');
+    const initialMatched = PROJECTS_DATA.find((p) => p.id === initialHash);
+    if (initialMatched) {
+      setSelectedProject(initialMatched);
+    }
+
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
 
   const handleStartSimilarProject = (category: string) => {
     setEnquiryCategory(category);
@@ -82,7 +108,7 @@ export const App: React.FC = () => {
       {/* Immersive Case Study Modal / Drawer */}
       <CaseStudyModal
         project={selectedProject}
-        onClose={() => setSelectedProject(null)}
+        onClose={handleCloseProject}
         onNavigateProject={handleNavigateProject}
         onStartSimilarProject={handleStartSimilarProject}
       />
