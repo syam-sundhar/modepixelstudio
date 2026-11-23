@@ -40,7 +40,16 @@ export const PROJECTS_DATA: Project[] = [
         caption: 'Minimalist studio framing focusing on neckline tension, garment proportion, and drop-shoulder drape.',
         category: 'hero',
         aspectRatio: 'aspect-[3/4]',
-        colSpan: 2
+        colSpan: 1
+      },
+      {
+        id: 'p1-4',
+        url: '/images/projects/project-01/back-view.webp',
+        title: 'Studio Back Graphic Perspective',
+        caption: 'Back graphic integrity: "Don’t Give Up" typography placement faithfully rendered on heavy cotton jersey.',
+        category: 'back',
+        aspectRatio: 'aspect-[3/4]',
+        colSpan: 1
       },
       {
         id: 'p1-2',
@@ -59,15 +68,6 @@ export const PROJECTS_DATA: Project[] = [
         category: 'street',
         aspectRatio: 'aspect-[3/4]',
         colSpan: 1
-      },
-      {
-        id: 'p1-4',
-        url: '/images/projects/project-01/back-view.webp',
-        title: 'Studio Back Graphic Perspective',
-        caption: 'Back graphic integrity: "Don’t Give Up" typography placement faithfully rendered on heavy cotton jersey.',
-        category: 'back',
-        aspectRatio: 'aspect-[3/4]',
-        colSpan: 2
       }
     ],
     detailShots: [
@@ -126,7 +126,7 @@ export const PROJECTS_DATA: Project[] = [
         caption: 'Atmospheric front-facing portrait capturing plush fleece density, kangaroo pocket ribbing, and soft ombré gradient.',
         category: 'hero',
         aspectRatio: 'aspect-[3/4]',
-        colSpan: 2
+        colSpan: 1
       },
       {
         id: 'p2-2',
@@ -153,7 +153,7 @@ export const PROJECTS_DATA: Project[] = [
         caption: 'Cinematic full-body presentation balancing architectural proportion and luxury streetwear presence.',
         category: 'street',
         aspectRatio: 'aspect-[3/4]',
-        colSpan: 2
+        colSpan: 1
       }
     ],
     detailShots: [

@@ -129,34 +129,26 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({
               </p>
             </div>
 
-            {/* Full-bleed Campaign Cover Frame - Adaptive & Fully Visible Without Cropping */}
-            <div className="relative w-full min-h-[380px] sm:min-h-[480px] max-h-[82vh] rounded-2xl overflow-hidden border border-white/[0.08] bg-[#07070a] shadow-2xl flex items-center justify-center p-3 sm:p-6">
-              {/* Ambient Blurred Backdrop for Luxury Glow */}
-              <div
-                className="absolute inset-0 opacity-20 filter blur-3xl scale-125 pointer-events-none"
-                style={{
-                  backgroundImage: `url(${project.coverImage})`,
-                  backgroundPosition: 'center',
-                  backgroundSize: 'cover'
-                }}
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-black/30 pointer-events-none" />
-              
-              <img
-                src={project.coverImage}
-                alt={project.title}
-                className="relative z-10 max-h-[72vh] md:max-h-[76vh] w-auto h-auto max-w-full object-contain mx-auto rounded-xl shadow-[0_20px_50px_rgba(0,0,0,0.8)] filter brightness-[0.96]"
-                loading="eager"
-                decoding="async"
-              />
-              
-              <div className="absolute bottom-5 left-5 md:bottom-8 md:left-8 pointer-events-none z-20">
-                <span className="font-mono text-[11px] tracking-widest text-[#d4ff00] block mb-1">
-                  OFFICIAL HERO FRAME
-                </span>
-                <span className="font-editorial text-2xl md:text-3xl text-white">
-                  {project.title}
-                </span>
+            {/* Campaign Cover Frame - Adaptive & Fitting the Image Perfectly */}
+            <div className="flex justify-center w-full">
+              <div className="relative inline-flex max-w-full rounded-2xl overflow-hidden border border-white/[0.08] bg-[#07070a] shadow-2xl max-h-[76vh]">
+                <img
+                  src={project.coverImage}
+                  alt={project.title}
+                  className="max-h-[76vh] w-auto h-auto max-w-full block object-contain mx-auto rounded-2xl filter brightness-[0.96]"
+                  loading="eager"
+                  decoding="async"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-transparent pointer-events-none" />
+                
+                <div className="absolute bottom-5 left-5 md:bottom-8 md:left-8 pointer-events-none z-20">
+                  <span className="font-mono text-[11px] tracking-widest text-[#d4ff00] block mb-1">
+                    OFFICIAL HERO FRAME
+                  </span>
+                  <span className="font-editorial text-2xl md:text-3xl text-white">
+                    {project.title}
+                  </span>
+                </div>
               </div>
             </div>
           </div>
@@ -277,29 +269,21 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({
               </h3>
             </div>
 
-            {/* Asymmetric Gallery Grid with Smooth Zoom */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+            {/* Editorial Gallery Grid with Exact-Fit Images & Zero Background Letterboxing */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 items-start">
               {project.gallery.map((image) => (
                 <div
                   key={image.id}
                   onClick={() => setSelectedLightboxImage(image)}
-                  className={`group relative rounded-xl overflow-hidden bg-[#0c0c10] border border-white/[0.08] cursor-pointer hover:border-[#d4ff00]/40 transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                  className={`group relative rounded-xl overflow-hidden bg-[#0c0c10] border border-white/[0.08] cursor-pointer hover:border-[#d4ff00]/40 transition-[border-color,box-shadow,transform] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
                     image.colSpan === 2 ? 'md:col-span-2' : 'md:col-span-1'
                   }`}
                 >
-                  <div className={`w-full ${image.aspectRatio || 'aspect-[4/5]'} bg-[#07070a] overflow-hidden flex items-center justify-center relative`}>
-                    <div
-                      className="absolute inset-0 opacity-15 filter blur-2xl scale-125 pointer-events-none"
-                      style={{
-                        backgroundImage: `url(${image.url})`,
-                        backgroundPosition: 'center',
-                        backgroundSize: 'cover'
-                      }}
-                    />
+                  <div className="w-full overflow-hidden bg-[#07070a] relative">
                     <img
                       src={image.url}
                       alt={image.title}
-                      className="relative z-10 w-full h-full max-h-[72vh] object-contain transition-transform duration-600 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.02]"
+                      className="relative z-10 w-full h-auto block object-cover transition-transform duration-600 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.02]"
                       loading="lazy"
                       decoding="async"
                     />
@@ -338,26 +322,18 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({
                 </p>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 items-start">
                 {project.detailShots.map((detail) => (
                   <div
                     key={detail.id}
                     onClick={() => setSelectedLightboxImage(detail)}
-                    className="group relative rounded-xl overflow-hidden bg-[#0c0c10] border border-white/[0.08] cursor-pointer hover:border-white/20 transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]"
+                    className="group relative rounded-xl overflow-hidden bg-[#0c0c10] border border-white/[0.08] cursor-pointer hover:border-[#d4ff00]/40 transition-[border-color,box-shadow,transform] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]"
                   >
-                    <div className="w-full aspect-[4/3] sm:aspect-square overflow-hidden bg-[#07070a] flex items-center justify-center relative">
-                      <div
-                        className="absolute inset-0 opacity-15 filter blur-xl scale-125 pointer-events-none"
-                        style={{
-                          backgroundImage: `url(${detail.url})`,
-                          backgroundPosition: 'center',
-                          backgroundSize: 'cover'
-                        }}
-                      />
+                    <div className="w-full overflow-hidden bg-[#07070a] relative">
                       <img
                         src={detail.url}
                         alt={detail.title}
-                        className="relative z-10 w-full h-full object-contain transition-transform duration-600 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.02]"
+                        className="relative z-10 w-full h-auto block object-cover transition-transform duration-600 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.02]"
                         loading="lazy"
                         decoding="async"
                       />
