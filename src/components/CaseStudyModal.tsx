@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
+import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, ChevronLeft, ChevronRight, ArrowUpRight, Sparkles, ArrowRight } from 'lucide-react';
 import { Project, ProjectImage } from '../types';
@@ -17,6 +18,52 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({
   onStartSimilarProject,
 }) => {
   const [selectedLightboxImage, setSelectedLightboxImage] = useState<ProjectImage | null>(null);
+  const [clickPosition, setClickPosition] = useState<{ x: number; y: number }>({
+    x: typeof window !== 'undefined' ? window.innerWidth / 2 : 0,
+    y: typeof window !== 'undefined' ? window.innerHeight / 2 : 0,
+  });
+
+  // Collect all images belonging to this project for smooth lightbox gallery navigation
+  const allProjectImages = useMemo(() => {
+    if (!project) return [];
+    const list: ProjectImage[] = [];
+    if (project.beforeAfterComparison) {
+      list.push({
+        id: 'input-ref',
+        url: project.beforeAfterComparison.beforeUrl,
+        title: 'Client Reference (Raw Input)',
+        caption: project.beforeAfterComparison.beforeLabel,
+        category: 'detail',
+      });
+    }
+    list.push(...project.gallery);
+    list.push(...project.detailShots);
+    return list;
+  }, [project]);
+
+  const currentImageIndex = selectedLightboxImage
+    ? allProjectImages.findIndex((img) => img.url === selectedLightboxImage.url)
+    : -1;
+
+  const handlePrevImage = (e?: React.MouseEvent) => {
+    if (e) e.stopPropagation();
+    if (allProjectImages.length <= 1) return;
+    const newIdx = currentImageIndex > 0 ? currentImageIndex - 1 : allProjectImages.length - 1;
+    setSelectedLightboxImage(allProjectImages[newIdx]);
+  };
+
+  const handleNextImage = (e?: React.MouseEvent) => {
+    if (e) e.stopPropagation();
+    if (allProjectImages.length <= 1) return;
+    const newIdx = currentImageIndex !== -1 && currentImageIndex < allProjectImages.length - 1 ? currentImageIndex + 1 : 0;
+    setSelectedLightboxImage(allProjectImages[newIdx]);
+  };
+
+  const handleOpenImage = (e: React.MouseEvent, img: ProjectImage) => {
+    e.stopPropagation();
+    setClickPosition({ x: e.clientX, y: e.clientY });
+    setSelectedLightboxImage(img);
+  };
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -26,10 +73,18 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({
         } else {
           onClose();
         }
-      } else if (e.key === 'ArrowRight' && !selectedLightboxImage) {
-        onNavigateProject('next');
-      } else if (e.key === 'ArrowLeft' && !selectedLightboxImage) {
-        onNavigateProject('prev');
+      } else if (e.key === 'ArrowRight') {
+        if (selectedLightboxImage) {
+          handleNextImage();
+        } else {
+          onNavigateProject('next');
+        }
+      } else if (e.key === 'ArrowLeft') {
+        if (selectedLightboxImage) {
+          handlePrevImage();
+        } else {
+          onNavigateProject('prev');
+        }
       }
     };
 
@@ -42,7 +97,7 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({
       document.body.style.overflow = 'auto';
       window.removeEventListener('keydown', handleKeyDown);
     };
-  }, [project, selectedLightboxImage, onClose, onNavigateProject]);
+  }, [project, selectedLightboxImage, onClose, onNavigateProject, currentImageIndex, allProjectImages]);
 
   if (!project) return null;
 
@@ -75,7 +130,7 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({
             <div className="flex items-center space-x-1 pr-3 border-r border-white/10">
               <button
                 onClick={() => onNavigateProject('prev')}
-                className="p-2 rounded-full hover:bg-white/10 text-white transition-colors duration-200"
+                className="p-2 rounded-full hover:bg-white/10 text-white transition-colors duration-200 cursor-pointer"
                 title="Previous Project (Left Arrow)"
                 aria-label="Previous Project"
               >
@@ -83,7 +138,7 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({
               </button>
               <button
                 onClick={() => onNavigateProject('next')}
-                className="p-2 rounded-full hover:bg-white/10 text-white transition-colors duration-200"
+                className="p-2 rounded-full hover:bg-white/10 text-white transition-colors duration-200 cursor-pointer"
                 title="Next Project (Right Arrow)"
                 aria-label="Next Project"
               >
@@ -91,12 +146,13 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({
               </button>
             </div>
 
+            {/* Back button without wrong mark (X icon removed when visiting projects) */}
             <button
               onClick={onClose}
-              className="p-2 rounded-full bg-white/10 hover:bg-[#d4ff00] text-white hover:text-black transition-colors duration-200"
-              aria-label="Close Case Study"
+              className="px-4 py-1.5 rounded-full bg-white/[0.06] hover:bg-[#d4ff00] hover:text-black text-[#a1a1aa] font-mono text-xs tracking-wider uppercase transition-colors duration-200 font-medium cursor-pointer"
+              aria-label="Back to Portfolio"
             >
-              <X className="w-5 h-5" />
+              BACK
             </button>
           </div>
         </div>
@@ -140,14 +196,15 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({
                 
                 {/* INPUT Card */}
                 <div className="lg:w-[280px] xl:w-[320px] shrink-0 flex flex-col items-center">
-                  <div className="relative w-full rounded-xl overflow-hidden border-2 border-white/[0.12] bg-[#0c0c10] group cursor-pointer"
-                       onClick={() => setSelectedLightboxImage({
-                         id: 'input-ref',
-                         url: project.beforeAfterComparison!.beforeUrl,
-                         title: 'Client Reference',
-                         caption: project.beforeAfterComparison!.beforeLabel,
-                         category: 'detail'
-                       })}
+                  <div
+                    className="relative w-full rounded-xl overflow-hidden border-2 border-white/[0.12] bg-[#0c0c10] group cursor-pointer"
+                    onClick={(e) => handleOpenImage(e, {
+                      id: 'input-ref',
+                      url: project.beforeAfterComparison!.beforeUrl,
+                      title: 'Client Reference (Raw Input)',
+                      caption: project.beforeAfterComparison!.beforeLabel,
+                      category: 'detail'
+                    })}
                   >
                     {/* INPUT Badge */}
                     <div className="absolute top-3 left-3 z-20">
@@ -170,7 +227,6 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({
 
                 {/* Arrow Connector */}
                 <div className="flex items-center justify-center lg:self-center py-2 lg:py-0">
-                  {/* Mobile: horizontal arrow */}
                   <div className="flex items-center gap-2 text-[#d4ff00]">
                     <div className="w-8 h-px bg-[#d4ff00]/60 hidden lg:block" />
                     <ArrowRight className="w-6 h-6 lg:w-5 lg:h-5" />
@@ -183,7 +239,7 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({
                     {outputImages.map((image, idx) => (
                       <div
                         key={image.id}
-                        onClick={() => setSelectedLightboxImage(image)}
+                        onClick={(e) => handleOpenImage(e, image)}
                         className="relative rounded-xl overflow-hidden border border-[#d4ff00]/20 bg-[#0c0c10] group cursor-pointer hover:border-[#d4ff00]/50 transition-[border-color] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]"
                       >
                         {/* OUTPUT Badge — only on first */}
@@ -229,7 +285,7 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({
                 {outputImages.map((image) => (
                   <div
                     key={image.id}
-                    onClick={() => setSelectedLightboxImage(image)}
+                    onClick={(e) => handleOpenImage(e, image)}
                     className="relative rounded-xl overflow-hidden border border-[#d4ff00]/20 bg-[#0c0c10] group cursor-pointer hover:border-[#d4ff00]/50 transition-[border-color] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]"
                   >
                     <img
@@ -264,7 +320,7 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({
                 {project.detailShots.map((detail) => (
                   <div
                     key={detail.id}
-                    onClick={() => setSelectedLightboxImage(detail)}
+                    onClick={(e) => handleOpenImage(e, detail)}
                     className="group relative rounded-xl overflow-hidden bg-[#0c0c10] border border-white/[0.08] cursor-pointer hover:border-[#d4ff00]/40 transition-[border-color] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]"
                   >
                     <img
@@ -304,7 +360,7 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({
                 onClose();
                 onStartSimilarProject(project.category);
               }}
-              className="px-8 py-4 rounded-full bg-[#d4ff00] hover:bg-white text-black font-mono text-xs tracking-wider uppercase font-semibold transition-all duration-280 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5 active:translate-y-0 shadow-[0_4px_24px_rgba(212,255,0,0.22)] flex items-center space-x-2 shrink-0"
+              className="px-8 py-4 rounded-full bg-[#d4ff00] hover:bg-white text-black font-mono text-xs tracking-wider uppercase font-semibold transition-all duration-280 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5 active:translate-y-0 shadow-[0_4px_24px_rgba(212,255,0,0.22)] flex items-center space-x-2 shrink-0 cursor-pointer"
             >
               <span>COMMISSION THIS STYLE</span>
               <ArrowUpRight className="w-4 h-4" />
@@ -315,20 +371,20 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({
           <div className="flex items-center justify-between pt-8 border-t border-white/[0.08] font-mono text-xs">
             <button
               onClick={() => onNavigateProject('prev')}
-              className="flex items-center space-x-2 text-[#9b9ba3] hover:text-white transition-colors duration-200"
+              className="flex items-center space-x-2 text-[#9b9ba3] hover:text-white transition-colors duration-200 cursor-pointer"
             >
               <ChevronLeft className="w-4 h-4" />
               <span>PREVIOUS</span>
             </button>
             <button
               onClick={onClose}
-              className="text-[#71717a] hover:text-[#d4ff00] transition-colors duration-200"
+              className="text-[#71717a] hover:text-[#d4ff00] transition-colors duration-200 cursor-pointer"
             >
               BACK TO PORTFOLIO
             </button>
             <button
               onClick={() => onNavigateProject('next')}
-              className="flex items-center space-x-2 text-[#9b9ba3] hover:text-white transition-colors duration-200"
+              className="flex items-center space-x-2 text-[#9b9ba3] hover:text-white transition-colors duration-200 cursor-pointer"
             >
               <span>NEXT</span>
               <ChevronRight className="w-4 h-4" />
@@ -336,45 +392,95 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({
           </div>
 
         </div>
+      </motion.div>
 
-        {/* Lightbox Modal for Full-Resolution Inspection */}
+      {/* Lightbox Modal for Full-Resolution Inspection - Rendered in document.body so it ALWAYS opens in viewport where clicked */}
+      {typeof document !== 'undefined' && createPortal(
         <AnimatePresence>
           {selectedLightboxImage && (
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 0.25 }}
-              className="fixed inset-0 z-60 bg-black/95 backdrop-blur-2xl flex flex-col items-center justify-center p-4 md:p-10 cursor-zoom-out"
+              transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
+              className="fixed inset-0 z-[9999] bg-black/95 backdrop-blur-2xl flex flex-col items-center justify-center p-4 md:p-10 cursor-zoom-out select-none"
               onClick={() => setSelectedLightboxImage(null)}
             >
+              {/* WRONG MARK (X) - DISPLAYED ONLY WHEN IMAGES ARE OPENED */}
               <button
-                onClick={() => setSelectedLightboxImage(null)}
-                className="absolute top-6 right-6 p-3 rounded-full bg-white/10 hover:bg-[#d4ff00] text-white hover:text-black transition-colors duration-200"
-                aria-label="Close Lightbox"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setSelectedLightboxImage(null);
+                }}
+                className="absolute top-6 right-6 p-3 rounded-full bg-white/10 hover:bg-[#d4ff00] text-white hover:text-black transition-colors duration-200 z-50 cursor-pointer shadow-lg"
+                aria-label="Close Image"
+                title="Close Image (Esc)"
               >
                 <X className="w-6 h-6" />
               </button>
 
-              <div
-                className="max-w-5xl max-h-[85vh] flex flex-col items-center"
+              {/* Prev / Next buttons in Lightbox for effortless navigation */}
+              {allProjectImages.length > 1 && (
+                <>
+                  <button
+                    onClick={handlePrevImage}
+                    className="absolute left-4 md:left-6 top-1/2 -translate-y-1/2 p-3 rounded-full bg-white/10 hover:bg-[#d4ff00] text-white hover:text-black transition-colors duration-200 z-50 cursor-pointer shadow-lg hidden sm:flex items-center justify-center"
+                    aria-label="Previous Image"
+                    title="Previous Image (Left Arrow)"
+                  >
+                    <ChevronLeft className="w-6 h-6" />
+                  </button>
+                  <button
+                    onClick={handleNextImage}
+                    className="absolute right-4 md:right-6 top-1/2 -translate-y-1/2 p-3 rounded-full bg-white/10 hover:bg-[#d4ff00] text-white hover:text-black transition-colors duration-200 z-50 cursor-pointer shadow-lg hidden sm:flex items-center justify-center"
+                    aria-label="Next Image"
+                    title="Next Image (Right Arrow)"
+                  >
+                    <ChevronRight className="w-6 h-6" />
+                  </button>
+                </>
+              )}
+
+              {/* Zoom Content: animates out from the exact coordinates where the user clicked */}
+              <motion.div
+                initial={{ scale: 0.65, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.65, opacity: 0 }}
+                transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+                style={{
+                  transformOrigin: clickPosition.x && clickPosition.y
+                    ? `${clickPosition.x}px ${clickPosition.y}px`
+                    : 'center center',
+                }}
+                className="max-w-5xl max-h-[85vh] flex flex-col items-center cursor-default"
                 onClick={(e) => e.stopPropagation()}
               >
                 <img
                   src={selectedLightboxImage.url}
                   alt={selectedLightboxImage.title}
-                  className="max-w-full max-h-[75vh] object-contain rounded-lg border border-white/10 shadow-2xl"
+                  className="max-w-full max-h-[75vh] object-contain rounded-xl border border-white/10 shadow-2xl"
                 />
                 <div className="mt-4 text-center">
                   <h4 className="font-editorial text-2xl text-white">
                     {selectedLightboxImage.title}
                   </h4>
+                  {selectedLightboxImage.caption && (
+                    <p className="font-mono text-xs text-[#9b9ba3] mt-1">
+                      {selectedLightboxImage.caption}
+                    </p>
+                  )}
+                  {allProjectImages.length > 1 && currentImageIndex !== -1 && (
+                    <span className="font-mono text-[10px] text-[#71717a] mt-1.5 inline-block">
+                      {currentImageIndex + 1} / {allProjectImages.length}
+                    </span>
+                  )}
                 </div>
-              </div>
+              </motion.div>
             </motion.div>
           )}
-        </AnimatePresence>
-      </motion.div>
+        </AnimatePresence>,
+        document.body
+      )}
     </AnimatePresence>
   );
 };
