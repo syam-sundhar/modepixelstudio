@@ -41,17 +41,17 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         
         {/* Section Header */}
-        <div className="max-w-3xl mb-16 md:mb-20">
-          <div className="inline-flex items-center space-x-2 text-[#d4ff00] font-mono text-xs tracking-[0.25em] uppercase mb-4">
+        <div className="max-w-3xl mb-12 md:mb-16">
+          <div className="inline-flex items-center space-x-2 text-[#d4ff00] font-mono text-xs tracking-[0.25em] uppercase mb-3">
             <Sparkles className="w-3.5 h-3.5" />
-            <span>SPECIALIZED CREATIVE CAPABILITIES</span>
+            <span>STUDIO CAPABILITIES</span>
           </div>
           <h2 className="font-editorial text-4xl sm:text-6xl md:text-7xl text-[#f7f7f5] leading-[0.95]">
             CREATIVE PRODUCTION,<br />
             <span className="italic font-light">WITHOUT THE TRADITIONAL SHOOT.</span>
           </h2>
-          <p className="mt-6 text-base sm:text-lg text-[#9b9ba3] font-light max-w-2xl leading-relaxed">
-            Eliminate models casting agency markups, venue permits, bad weather reshoots, and lengthy equipment logistics. We build commercial campaigns directly from your product references.
+          <p className="mt-5 text-base sm:text-lg text-[#9b9ba3] font-light max-w-xl leading-relaxed">
+            Commercial fashion and product campaigns built directly from your physical references.
           </p>
         </div>
 

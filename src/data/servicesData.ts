@@ -4,81 +4,81 @@ export const SERVICES_DATA: ServiceItem[] = [
   {
     number: '01',
     id: 'ai-fashion-photography',
-    title: 'AI Fashion Photography',
-    tagline: 'Hyper-realistic on-model apparel campaigns without casting agencies or location permits.',
-    description: 'We place your garments onto diverse, natural-looking editorial models across tailored poses, lighting conditions, and aesthetic directions. Product colors, stitch lines, and front/back graphics remain meticulously faithful to the physical reference.',
+    title: 'Fashion Campaigns',
+    tagline: 'High-fashion on-model editorials crafted from physical garment references.',
+    description: 'We place your garments onto diverse editorial models across tailored poses, realistic drape, and custom studio or on-location lighting.',
     deliverables: [
-      'On-model front, back, and 3/4 perspective shoots',
-      'Realistic fabric fold dynamics and drape physics',
-      'Customizable model demographics, styling, and hairstyles',
-      'High-resolution commercial print and digital master files'
+      'Front, back & 3/4 on-model perspectives',
+      'Realistic fabric drape & fold physics',
+      'Custom model styling & atmospheric lighting',
+      'Print & digital commercial master files'
     ],
     previewImage: '/images/projects/project-01/hero-front.webp',
     aspectRatio: 'aspect-[4/5]',
-    tags: ['Streetwear', 'High Fashion', 'Lookbooks', 'Model Casting']
+    tags: ['Streetwear', 'Outerwear', 'Lookbooks']
   },
   {
     number: '02',
     id: 'product-photography',
-    title: 'Product Photography',
-    tagline: 'Architectural, studio-grade product hero shots on stone, obsidian, and minimalist sets.',
-    description: 'Elevate footwear, cosmetics, fragrances, and luxury accessories into museum-grade hero visuals. We sculpt light around glass, brushed metals, embossed leather, and technical materials with microscopic optical accuracy.',
+    title: 'Product Staging',
+    tagline: 'Architectural, studio-grade hero visuals on obsidian and stone plinths.',
+    description: 'Sculpted lighting and dark-mode plinth staging for footwear, cosmetics, and luxury accessories with microscopic surface detail.',
     deliverables: [
-      'Sculpted rim lighting and dark-mode plinth staging',
-      'Material texture and reflective surface control',
-      'Micro-macro detail and exploded component styling',
-      'Seamless transparent PNG or custom studio backdrops'
+      'Precision rim lighting & reflection control',
+      'True-to-life material textures & finishes',
+      'Macro detail & hero perspective angles',
+      'Seamless studio backdrops or transparent PNGs'
     ],
     previewImage: '/images/projects/project-04/hero-serum.webp',
     aspectRatio: 'aspect-square',
-    tags: ['Beauty & Skincare', 'Footwear', 'Luxury Goods', 'Hero Shots']
+    tags: ['Footwear', 'Beauty', 'Hero Staging']
   },
   {
     number: '03',
     id: 'lifestyle-campaigns',
-    title: 'Lifestyle Campaigns',
-    tagline: 'Transport your collection into evocative real-world atmospheres and global architecture.',
-    description: 'Place your products in sun-drenched European avenues, minimalist Tokyo concrete lofts, or atmospheric misty landscapes without arranging flights, crews, or weather contingencies. We build an emotional world around your brand.',
+    title: 'Editorial Environments',
+    tagline: 'Transport your collection into evocative international architecture.',
+    description: 'Place your collection in European cobblestone streets, minimalist concrete lofts, or golden hour cityscapes without travel costs.',
     deliverables: [
-      'Location curation matching brand ethos',
-      'Environmental golden-hour and overcast mood direction',
-      'Contextual model interactions and natural candid styling',
-      'Multi-platform social media crops and aspect ratios'
+      'Architectural backdrops tailored to brand ethos',
+      'Golden hour & natural ambient lighting',
+      'Candid model poses & environmental styling',
+      'Social & e-commerce aspect ratio formats'
     ],
     previewImage: '/images/projects/project-01/lifestyle-sidewalk.webp',
     aspectRatio: 'aspect-[4/3]',
-    tags: ['Editorial', 'Atmospheric', 'Urban Environments', 'Storytelling']
+    tags: ['Location', 'Atmospheric', 'Urban']
   },
   {
     number: '04',
     id: 'creative-advertising',
-    title: 'Creative Advertising',
-    tagline: 'High-impact key visuals designed to stop the scroll and elevate brand perception.',
-    description: 'Turn your seasonal drops into viral digital billboards, paid Meta & TikTok creatives, and full-bleed lookbook spreads. We craft surreal, high-fashion art direction that combines conceptual storytelling with strong commercial conversion.',
+    title: 'Creative Key Visuals',
+    tagline: 'High-impact visuals engineered for digital lookbooks and billboard print.',
+    description: 'Bold art direction and striking compositions designed to elevate brand perception and stop the scroll across paid media.',
     deliverables: [
-      'Key visuals with deliberate copy negative space',
-      'Scroll-stopping visual hooks and artistic compositions',
-      'A/B creative variations across moods and lighting',
-      'Color-graded for digital feeds, retargeting, and billboards'
+      'Key visuals with intentional copy negative space',
+      'High-contrast editorial lighting & color grading',
+      'A/B creative variations across moods',
+      'Billboard & paid feed ready assets'
     ],
     previewImage: '/images/projects/project-04/ingredients-composition.webp',
     aspectRatio: 'aspect-[3/4]',
-    tags: ['Paid Media', 'Billboard Visuals', 'Campaign Drops', 'Art Direction']
+    tags: ['Billboards', 'Lookbooks', 'Paid Feeds']
   },
   {
     number: '05',
     id: 'ecommerce-catalogues',
-    title: 'E-commerce Catalogues',
-    tagline: 'Standardized, high-volume consistency for luxury online stores and marketplaces.',
-    description: 'Maintain uniform lighting, camera focal distance, and shadow alignment across 50+ SKUs. Clean, color-accurate catalogue photography that builds customer trust and reduces return rates caused by mismatched expectations.',
+    title: 'Catalogue Consistency',
+    tagline: 'Uniform lighting and angles across 20+ SKUs to build client trust.',
+    description: 'Standardized camera angles, lighting falloff, and color-accurate fabric calibration across your entire seasonal lineup.',
     deliverables: [
-      'Strict color calibration against physical fabric pantones',
-      'Consistent model poses and camera angles across entire lines',
-      'Optimized web formats (WebP, AVIF) with fast load footprints',
-      'Clean white, neutral grey, or custom brand backdrop presets'
+      'Strict color matching against physical swatches',
+      'Standardized model poses across all SKUs',
+      'Optimized lightweight web formats (WebP/AVIF)',
+      'Consistent neutral grey or studio backdrops'
     ],
     previewImage: '/images/projects/project-02/back-view.webp',
     aspectRatio: 'aspect-square',
-    tags: ['High Volume', 'Color Accuracy', 'Shopify / D2C', 'Zero Fluff']
+    tags: ['E-Commerce', 'Catalogues', 'Color Accurate']
   }
 ];

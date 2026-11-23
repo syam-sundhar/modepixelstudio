@@ -23,16 +23,16 @@ export const ProcessSection: React.FC = () => {
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         
         {/* Section Header */}
-        <div className="max-w-3xl mb-16 md:mb-20">
-          <span className="font-mono text-xs tracking-[0.25em] text-[#d4ff00] uppercase block mb-4">
-            // SIMPLE, PREDICTABLE PRODUCTION
+        <div className="max-w-3xl mb-12 md:mb-16">
+          <span className="font-mono text-xs tracking-[0.25em] text-[#d4ff00] uppercase block mb-3">
+            // SIMPLE WORKFLOW
           </span>
           <h2 className="font-editorial text-4xl sm:text-6xl md:text-7xl text-[#f7f7f5] leading-[0.95]">
             HOW IT WORKS.<br />
-            <span className="italic font-light">FOUR STEPS TO CAMPAIGN DELIVERY.</span>
+            <span className="italic font-light">FOUR STEPS TO DELIVERY.</span>
           </h2>
-          <p className="mt-6 text-base sm:text-lg text-[#9b9ba3] font-light max-w-2xl leading-relaxed">
-            From initial product references to final uncompressed master assets. A transparent, milestone-driven workflow designed to eliminate surprises.
+          <p className="mt-5 text-base sm:text-lg text-[#9b9ba3] font-light max-w-xl leading-relaxed">
+            From product references to uncompressed master assets in 3–5 business days.
           </p>
         </div>
 
@@ -107,25 +107,25 @@ export const ProcessSection: React.FC = () => {
         </div>
 
         {/* Client Product Image Intake Checklist */}
-        <div className="p-8 md:p-12 rounded-2xl bg-[#0d0d12] border border-white/[0.08] shadow-2xl">
-          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-8 pb-8 border-b border-white/[0.08]">
+        <div className="p-7 md:p-10 rounded-2xl bg-[#0d0d12] border border-white/[0.08] shadow-2xl">
+          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 pb-6 border-b border-white/[0.08]">
             <div>
               <span className="font-mono text-xs tracking-widest text-[#d4ff00] uppercase block mb-1">
-                // CLIENT ASSET INTAKE CHECKLIST
+                // WHAT TO PROVIDE
               </span>
-              <h3 className="font-editorial text-3xl sm:text-4xl text-white">
-                WHAT YOU NEED TO PROVIDE
+              <h3 className="font-editorial text-2xl sm:text-3xl text-white">
+                CLIENT ASSET CHECKLIST
               </h3>
-              <p className="font-sans text-sm text-[#9b9ba3] max-w-xl mt-2">
-                We make commissioning effortless. No expensive photoshoot studio required — clean smartphone photos against good lighting are sufficient to initiate your campaign.
+              <p className="font-sans text-xs sm:text-sm text-[#9b9ba3] max-w-lg mt-1.5 font-light">
+                Clean smartphone photos against good lighting are sufficient to initiate production.
               </p>
             </div>
 
             <a
               href="#enquiry"
-              className="px-6 py-3.5 rounded-full bg-white text-black font-mono text-xs font-semibold tracking-wider uppercase hover:bg-[#d4ff00] hover:-translate-y-0.5 active:translate-y-0 transition-all duration-250 ease-[cubic-bezier(0.22,1,0.36,1)] whitespace-nowrap self-start lg:self-auto flex items-center space-x-2"
+              className="px-6 py-3 rounded-full bg-white text-black font-mono text-xs font-semibold tracking-wider uppercase hover:bg-[#d4ff00] hover:-translate-y-0.5 active:translate-y-0 transition-all duration-250 ease-[cubic-bezier(0.22,1,0.36,1)] whitespace-nowrap self-start lg:self-auto flex items-center space-x-2"
             >
-              <span>SUBMIT YOUR PRODUCT ASSETS</span>
+              <span>SUBMIT PRODUCT ASSETS</span>
               <ChevronRight className="w-4 h-4" />
             </a>
           </div>

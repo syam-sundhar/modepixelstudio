@@ -13,17 +13,17 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ onSelectTier }) 
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         
         {/* Section Header */}
-        <div className="max-w-3xl mb-16 md:mb-20">
-          <div className="inline-flex items-center space-x-2 text-[#d4ff00] font-mono text-xs tracking-[0.25em] uppercase mb-4">
+        <div className="max-w-3xl mb-12 md:mb-16">
+          <div className="inline-flex items-center space-x-2 text-[#d4ff00] font-mono text-xs tracking-[0.25em] uppercase mb-3">
             <Sparkles className="w-3.5 h-3.5" />
-            <span>TRANSPARENT COMMERCIAL PACKAGES</span>
+            <span>TRANSPARENT PRICING</span>
           </div>
           <h2 className="font-editorial text-4xl sm:text-6xl md:text-7xl text-[#f7f7f5] leading-[0.95]">
             SIMPLE PACKAGES.<br />
-            <span className="italic font-light">NO HIDDEN CREW SURCHARGES.</span>
+            <span className="italic font-light">NO HIDDEN SURCHARGES.</span>
           </h2>
-          <p className="mt-6 text-base sm:text-lg text-[#9b9ba3] font-light max-w-2xl leading-relaxed">
-            Direct pricing for emerging fashion labels and independent brands. Clear deliverables, included revisions, and unconditional commercial usage rights.
+          <p className="mt-5 text-base sm:text-lg text-[#9b9ba3] font-light max-w-xl leading-relaxed">
+            Clear deliverables, included revisions, and unconditional commercial usage rights.
           </p>
         </div>
 
@@ -105,9 +105,9 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ onSelectTier }) 
         </div>
 
         {/* Commercial Payment Terms Note */}
-        <div className="mt-16 text-center">
-          <p className="font-mono text-xs text-[#71717a] max-w-xl mx-auto leading-relaxed">
-            Standard Terms: 50% advance upon creative brief sign-off, 50% upon final delivery of unwatermarked, high-resolution master files. Custom high-volume monthly content retainer packages available on request.
+        <div className="mt-14 text-center">
+          <p className="font-mono text-xs text-[#71717a] max-w-lg mx-auto leading-relaxed">
+            50% upon project sign-off · 50% upon final master asset delivery · Full commercial usage included
           </p>
         </div>
 
