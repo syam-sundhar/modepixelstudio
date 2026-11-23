@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, ChevronLeft, ChevronRight, ArrowUpRight, CheckCircle2, ShieldCheck, Sparkles } from 'lucide-react';
+import { X, ChevronLeft, ChevronRight, ArrowUpRight, Sparkles, ArrowRight } from 'lucide-react';
 import { Project, ProjectImage } from '../types';
-import { BeforeAfterSlider } from './BeforeAfterSlider';
 
 interface CaseStudyModalProps {
   project: Project | null;
@@ -47,6 +46,10 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({
 
   if (!project) return null;
 
+  // Gather the 4 output images for the transformation block
+  const outputImages = project.gallery.slice(0, 4);
+  const hasTransformation = !!project.beforeAfterComparison;
+
   return (
     <AnimatePresence>
       <motion.div 
@@ -69,7 +72,6 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({
           </div>
 
           <div className="flex items-center space-x-3">
-            {/* Prev / Next Navigation buttons */}
             <div className="flex items-center space-x-1 pr-3 border-r border-white/10">
               <button
                 onClick={() => onNavigateProject('prev')}
@@ -89,7 +91,6 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({
               </button>
             </div>
 
-            {/* Close Modal button */}
             <button
               onClick={onClose}
               className="p-2 rounded-full bg-white/10 hover:bg-[#d4ff00] text-white hover:text-black transition-colors duration-200"
@@ -101,10 +102,10 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({
         </div>
 
         {/* Main Case Study Content Container */}
-        <div className="max-w-6xl mx-auto px-6 md:px-12 py-10 md:py-16 flex flex-col space-y-20 md:space-y-24">
+        <div className="max-w-6xl mx-auto px-6 md:px-12 py-10 md:py-16 flex flex-col space-y-16 md:space-y-20">
           
-          {/* 1. Campaign Cover & Hero Header */}
-          <div className="flex flex-col space-y-6 md:space-y-8">
+          {/* 1. Title Header — Minimal */}
+          <div className="flex flex-col space-y-4">
             <div className="flex flex-wrap items-center gap-3">
               <span className="px-3 py-1 rounded-full bg-[#d4ff00]/10 border border-[#d4ff00]/30 text-[#d4ff00] font-mono text-[10px] tracking-wider uppercase font-semibold flex items-center gap-1.5">
                 <Sparkles className="w-3 h-3" />
@@ -113,238 +114,135 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({
               <span className="px-3 py-1 rounded-full bg-white/[0.04] border border-white/[0.08] text-[#a1a1aa] font-mono text-[10px] tracking-wider uppercase">
                 {project.season} · {project.year}
               </span>
-              <span className="px-3 py-1 rounded-full bg-zinc-800/80 border border-zinc-700 text-zinc-300 font-mono text-[10px] tracking-wider uppercase flex items-center gap-1">
-                <ShieldCheck className="w-3 h-3 text-[#d4ff00]" />
-                {project.statusTag}
-              </span>
             </div>
 
-            {/* Campaign Name */}
-            <div>
-              <h1 className="font-editorial text-4xl sm:text-6xl md:text-7xl text-[#f7f7f5] leading-[0.98] mb-3">
-                {project.title}
-              </h1>
-              <p className="font-sans text-lg sm:text-xl text-[#9b9ba3] font-light max-w-2xl">
-                {project.subtitle}
-              </p>
-            </div>
-
-            {/* Campaign Cover Frame - Adaptive & Fitting the Image Perfectly */}
-            <div className="flex justify-center w-full">
-              <div className="relative inline-flex max-w-full rounded-2xl overflow-hidden border border-white/[0.08] bg-[#07070a] shadow-2xl max-h-[76vh]">
-                <img
-                  src={project.coverImage}
-                  alt={project.title}
-                  className="max-h-[76vh] w-auto h-auto max-w-full block object-contain mx-auto rounded-2xl filter brightness-[0.96]"
-                  loading="eager"
-                  decoding="async"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-transparent pointer-events-none" />
-                
-                <div className="absolute bottom-5 left-5 md:bottom-8 md:left-8 pointer-events-none z-20">
-                  <span className="font-mono text-[11px] tracking-widest text-[#d4ff00] block mb-1">
-                    OFFICIAL HERO FRAME
-                  </span>
-                  <span className="font-editorial text-2xl md:text-3xl text-white">
-                    {project.title}
-                  </span>
-                </div>
-              </div>
-            </div>
+            <h1 className="font-editorial text-4xl sm:text-6xl md:text-7xl text-[#f7f7f5] leading-[0.98]">
+              {project.title}
+            </h1>
+            <p className="font-sans text-lg text-[#9b9ba3] font-light max-w-xl">
+              {project.subtitle}
+            </p>
           </div>
 
-          {/* 4 & 5. Creative Concept, Visual Direction & Setup Grid */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 md:gap-12 pt-8 border-t border-white/[0.08]">
-            {/* Left Column: Creative Concept */}
-            <div className="lg:col-span-7 flex flex-col space-y-6">
-              <span className="font-mono text-xs tracking-widest text-[#71717a] uppercase">
-                // 04 CREATIVE CONCEPT
-              </span>
-              <p className="font-sans text-lg md:text-xl text-[#e5e5ea] font-light leading-relaxed">
-                {project.creativeConcept}
-              </p>
-
-              <div className="pt-4">
-                <span className="font-mono text-xs tracking-widest text-[#71717a] uppercase block mb-3">
-                  // 05 VISUAL DIRECTION
+          {/* 2. INPUT → OUTPUTS Transformation Block */}
+          {hasTransformation ? (
+            <div className="flex flex-col space-y-6">
+              {/* Section Label */}
+              <div className="flex items-center gap-3">
+                <span className="font-mono text-xs tracking-widest text-[#d4ff00] uppercase">
+                  // TRANSFORMATION
                 </span>
-                <p className="font-sans text-base text-[#9b9ba3] leading-relaxed font-light">
-                  {project.visualDirection}
-                </p>
+                <div className="flex-1 h-px bg-white/[0.08]" />
               </div>
 
-              {/* Lighting Setup */}
-              <div className="p-5 rounded-xl bg-white/[0.03] border border-white/[0.06]">
-                <span className="font-mono text-[11px] tracking-wider text-[#d4ff00] uppercase block mb-1.5 font-semibold">
-                  LIGHTING & CAMERA ARCHITECTURE
-                </span>
-                <p className="font-mono text-xs text-[#a1a1aa] leading-normal">
-                  {project.lightingSetup}
-                </p>
-              </div>
-            </div>
-
-            {/* Right Column: Specifications & Deliverables */}
-            <div className="lg:col-span-5 flex flex-col space-y-6 lg:pl-6 lg:border-l border-white/[0.08]">
-              <div>
-                <span className="font-mono text-xs tracking-widest text-[#71717a] uppercase block mb-2">
-                  TARGET INDUSTRY / CLIENT
-                </span>
-                <span className="text-white font-medium text-base">
-                  {project.clientType}
-                </span>
-              </div>
-
-              {/* Color Palette Swatches */}
-              <div>
-                <span className="font-mono text-xs tracking-widest text-[#71717a] uppercase block mb-3">
-                  CAMPAIGN COLOR PALETTE
-                </span>
-                <div className="flex items-center space-x-2">
-                  {project.colorPalette.map((color, idx) => (
-                    <div key={idx} className="flex flex-col items-center space-y-1">
-                      <div
-                        className="w-10 h-10 rounded-lg border border-white/20 shadow-inner"
-                        style={{ backgroundColor: color }}
-                        title={color}
-                      />
-                      <span className="font-mono text-[9px] text-[#71717a]">
-                        {color}
+              {/* Input → Outputs Layout */}
+              <div className="flex flex-col lg:flex-row gap-6 lg:gap-8 items-start">
+                
+                {/* INPUT Card */}
+                <div className="lg:w-[280px] xl:w-[320px] shrink-0 flex flex-col items-center">
+                  <div className="relative w-full rounded-xl overflow-hidden border-2 border-white/[0.12] bg-[#0c0c10] group cursor-pointer"
+                       onClick={() => setSelectedLightboxImage({
+                         id: 'input-ref',
+                         url: project.beforeAfterComparison!.beforeUrl,
+                         title: 'Client Reference',
+                         caption: project.beforeAfterComparison!.beforeLabel,
+                         category: 'detail'
+                       })}
+                  >
+                    {/* INPUT Badge */}
+                    <div className="absolute top-3 left-3 z-20">
+                      <span className="px-3 py-1.5 rounded-md bg-white/90 text-black font-mono text-[10px] tracking-widest uppercase font-bold shadow-lg">
+                        INPUT
                       </span>
                     </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Campaign Deliverables */}
-              <div>
-                <span className="font-mono text-xs tracking-widest text-[#71717a] uppercase block mb-3">
-                  DELIVERABLE SPECIFICATIONS
-                </span>
-                <ul className="space-y-2">
-                  {project.deliverables.map((item, idx) => (
-                    <li key={idx} className="flex items-start space-x-2.5 text-xs text-[#c5c5d0]">
-                      <CheckCircle2 className="w-3.5 h-3.5 text-[#d4ff00] shrink-0 mt-0.5" />
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          </div>
-
-          {/* Draggable Before & After Comparison Slider */}
-          {project.beforeAfterComparison && (
-            <div className="flex flex-col space-y-6 pt-8 border-t border-white/[0.08]">
-              <div className="flex flex-col space-y-2">
-                <span className="font-mono text-xs tracking-widest text-[#d4ff00] uppercase">
-                  // PRODUCT REFERENCE TRANSFORMATION
-                </span>
-                <h3 className="font-editorial text-3xl sm:text-4xl text-white">
-                  RAW INPUT VERSUS FINAL PRODUCTION
-                </h3>
-                <p className="font-sans text-sm text-[#9b9ba3] max-w-xl font-light">
-                  Drag the center divider to inspect how ordinary flat garment references are transformed into cinematic on-model campaign photographs while maintaining 100% product fidelity.
-                </p>
-              </div>
-
-              <BeforeAfterSlider
-                beforeUrl={project.beforeAfterComparison.beforeUrl}
-                afterUrl={project.beforeAfterComparison.afterUrl}
-                beforeLabel={project.beforeAfterComparison.beforeLabel}
-                afterLabel={project.beforeAfterComparison.afterLabel}
-                caption={project.beforeAfterComparison.caption}
-              />
-            </div>
-          )}
-
-          {/* 6. Full-Resolution Image Gallery */}
-          <div className="flex flex-col space-y-8 pt-8 border-t border-white/[0.08]">
-            <div className="flex flex-col space-y-2">
-              <span className="font-mono text-xs tracking-widest text-[#71717a] uppercase">
-                // 06 FULL-RESOLUTION IMAGE GALLERY
-              </span>
-              <h3 className="font-editorial text-3xl sm:text-4xl text-white">
-                CAMPAIGN EXHIBITION ANGLES
-              </h3>
-            </div>
-
-            {/* Editorial Gallery Grid with Exact-Fit Images & Zero Background Letterboxing */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 items-start">
-              {project.gallery.map((image) => (
-                <div
-                  key={image.id}
-                  onClick={() => setSelectedLightboxImage(image)}
-                  className={`group relative rounded-xl overflow-hidden bg-[#0c0c10] border border-white/[0.08] cursor-pointer hover:border-[#d4ff00]/40 transition-[border-color,box-shadow,transform] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-                    image.colSpan === 2 ? 'md:col-span-2' : 'md:col-span-1'
-                  }`}
-                >
-                  <div className="w-full overflow-hidden bg-[#07070a] relative">
                     <img
-                      src={image.url}
-                      alt={image.title}
-                      className="relative z-10 w-full h-auto block object-cover transition-transform duration-600 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.02]"
-                      loading="lazy"
+                      src={project.beforeAfterComparison!.beforeUrl}
+                      alt="Client Reference Input"
+                      className="w-full h-auto block object-cover transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.02]"
+                      loading="eager"
                       decoding="async"
                     />
                   </div>
-                  {/* Caption Bar */}
-                  <div className="p-4 bg-[#0a0a0d] border-t border-white/[0.05] flex items-center justify-between">
-                    <div>
-                      <h4 className="font-sans text-sm font-medium text-white group-hover:text-[#d4ff00] transition-colors duration-200">
-                        {image.title}
-                      </h4>
-                      <p className="font-mono text-[11px] text-[#71717a] mt-0.5">
-                        {image.caption}
-                      </p>
-                    </div>
-                    <span className="font-mono text-[9px] text-[#a1a1aa] uppercase px-2 py-1 rounded bg-white/[0.04]">
-                      {image.category}
-                    </span>
+                  <span className="mt-3 font-mono text-[11px] text-[#71717a] tracking-wide text-center">
+                    CLIENT REFERENCE PHOTO
+                  </span>
+                </div>
+
+                {/* Arrow Connector */}
+                <div className="flex items-center justify-center lg:self-center py-2 lg:py-0">
+                  {/* Mobile: horizontal arrow */}
+                  <div className="flex items-center gap-2 text-[#d4ff00]">
+                    <div className="w-8 h-px bg-[#d4ff00]/60 hidden lg:block" />
+                    <ArrowRight className="w-6 h-6 lg:w-5 lg:h-5" />
                   </div>
                 </div>
-              ))}
-            </div>
-          </div>
 
-          {/* 7. Product Detail & Macro Photography */}
-          {project.detailShots.length > 0 && (
-            <div className="flex flex-col space-y-8 pt-8 border-t border-white/[0.08]">
-              <div className="flex flex-col space-y-2">
-                <span className="font-mono text-xs tracking-widest text-[#71717a] uppercase">
-                  // 07 PRODUCT DETAIL & MACRO PHOTOGRAPHY
+                {/* OUTPUT Cards Grid */}
+                <div className="flex-1 w-full">
+                  <div className="grid grid-cols-2 gap-3 md:gap-4">
+                    {outputImages.map((image, idx) => (
+                      <div
+                        key={image.id}
+                        onClick={() => setSelectedLightboxImage(image)}
+                        className="relative rounded-xl overflow-hidden border border-[#d4ff00]/20 bg-[#0c0c10] group cursor-pointer hover:border-[#d4ff00]/50 transition-[border-color] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]"
+                      >
+                        {/* OUTPUT Badge — only on first */}
+                        {idx === 0 && (
+                          <div className="absolute top-3 left-3 z-20">
+                            <span className="px-3 py-1.5 rounded-md bg-[#d4ff00] text-black font-mono text-[10px] tracking-widest uppercase font-bold shadow-lg">
+                              OUTPUTS
+                            </span>
+                          </div>
+                        )}
+                        <img
+                          src={image.url}
+                          alt={image.title}
+                          className="w-full h-auto block object-cover transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.02]"
+                          loading="lazy"
+                          decoding="async"
+                        />
+                        <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-3 pointer-events-none">
+                          <span className="font-sans text-xs text-white/90 font-medium">
+                            {image.title}
+                          </span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  <span className="mt-3 font-mono text-[11px] text-[#71717a] tracking-wide block text-center lg:text-left">
+                    AI-GENERATED CAMPAIGN PHOTOGRAPHS
+                  </span>
+                </div>
+              </div>
+            </div>
+          ) : (
+            /* Projects without before/after (03, 04): Show all outputs in a clean grid */
+            <div className="flex flex-col space-y-6">
+              <div className="flex items-center gap-3">
+                <span className="font-mono text-xs tracking-widest text-[#d4ff00] uppercase">
+                  // AI-GENERATED CAMPAIGN
                 </span>
-                <h3 className="font-editorial text-3xl sm:text-4xl text-white">
-                  FABRIC, TEXTURE & GRAPHIC FIDELITY
-                </h3>
-                <p className="font-sans text-sm text-[#9b9ba3] max-w-xl font-light">
-                  Commercial fashion photography relies on convincing tactile textures — from brushed fleece fibers and heavy rib stitching to sharp vector print boundaries.
-                </p>
+                <div className="flex-1 h-px bg-white/[0.08]" />
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 items-start">
-                {project.detailShots.map((detail) => (
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                {outputImages.map((image) => (
                   <div
-                    key={detail.id}
-                    onClick={() => setSelectedLightboxImage(detail)}
-                    className="group relative rounded-xl overflow-hidden bg-[#0c0c10] border border-white/[0.08] cursor-pointer hover:border-[#d4ff00]/40 transition-[border-color,box-shadow,transform] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]"
+                    key={image.id}
+                    onClick={() => setSelectedLightboxImage(image)}
+                    className="relative rounded-xl overflow-hidden border border-[#d4ff00]/20 bg-[#0c0c10] group cursor-pointer hover:border-[#d4ff00]/50 transition-[border-color] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]"
                   >
-                    <div className="w-full overflow-hidden bg-[#07070a] relative">
-                      <img
-                        src={detail.url}
-                        alt={detail.title}
-                        className="relative z-10 w-full h-auto block object-cover transition-transform duration-600 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.02]"
-                        loading="lazy"
-                        decoding="async"
-                      />
-                    </div>
-                    <div className="p-4 bg-[#0a0a0d] border-t border-white/[0.05]">
-                      <h4 className="font-sans text-sm font-medium text-white">
-                        {detail.title}
-                      </h4>
-                      <p className="font-mono text-[11px] text-[#71717a] mt-0.5">
-                        {detail.caption}
-                      </p>
+                    <img
+                      src={image.url}
+                      alt={image.title}
+                      className="w-full h-auto block object-cover transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.02]"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                    <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-3 pointer-events-none">
+                      <span className="font-sans text-xs text-white/90 font-medium">
+                        {image.title}
+                      </span>
                     </div>
                   </div>
                 ))}
@@ -352,17 +250,52 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({
             </div>
           )}
 
-          {/* 8. Final Campaign Presentation & Next Steps */}
+          {/* 3. Detail & Macro Photography — Compact */}
+          {project.detailShots.length > 0 && (
+            <div className="flex flex-col space-y-6 pt-6 border-t border-white/[0.08]">
+              <div className="flex items-center gap-3">
+                <span className="font-mono text-xs tracking-widest text-[#71717a] uppercase">
+                  // DETAIL & TEXTURE
+                </span>
+                <div className="flex-1 h-px bg-white/[0.08]" />
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 items-start">
+                {project.detailShots.map((detail) => (
+                  <div
+                    key={detail.id}
+                    onClick={() => setSelectedLightboxImage(detail)}
+                    className="group relative rounded-xl overflow-hidden bg-[#0c0c10] border border-white/[0.08] cursor-pointer hover:border-[#d4ff00]/40 transition-[border-color] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]"
+                  >
+                    <img
+                      src={detail.url}
+                      alt={detail.title}
+                      className="w-full h-auto block object-cover transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.02]"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                    <div className="p-3 bg-[#0a0a0d] border-t border-white/[0.05]">
+                      <h4 className="font-sans text-sm font-medium text-white group-hover:text-[#d4ff00] transition-colors duration-200">
+                        {detail.title}
+                      </h4>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* 4. CTA — Start a similar project */}
           <div className="rounded-2xl p-8 md:p-12 bg-gradient-to-b from-white/[0.04] to-transparent border border-white/[0.08] flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
             <div className="max-w-xl">
               <span className="font-mono text-xs tracking-widest text-[#d4ff00] uppercase block mb-2">
-                // 08 READY TO COMMENCE
+                // READY TO START
               </span>
               <h3 className="font-editorial text-3xl sm:text-4xl text-white mb-3">
-                WANT A SIMILAR CAMPAIGN FOR YOUR PRODUCT?
+                WANT THIS FOR YOUR PRODUCT?
               </h3>
               <p className="font-sans text-sm text-[#9b9ba3] font-light">
-                Provide your product photos, target mood, and garment specs. We deliver campaign-ready commercial photographs within 3–5 business days.
+                Send us your product photos and we'll deliver campaign-ready images within 3–5 business days.
               </p>
             </div>
 
@@ -385,7 +318,7 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({
               className="flex items-center space-x-2 text-[#9b9ba3] hover:text-white transition-colors duration-200"
             >
               <ChevronLeft className="w-4 h-4" />
-              <span>PREVIOUS CAMPAIGN</span>
+              <span>PREVIOUS</span>
             </button>
             <button
               onClick={onClose}
@@ -397,7 +330,7 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({
               onClick={() => onNavigateProject('next')}
               className="flex items-center space-x-2 text-[#9b9ba3] hover:text-white transition-colors duration-200"
             >
-              <span>NEXT CAMPAIGN</span>
+              <span>NEXT</span>
               <ChevronRight className="w-4 h-4" />
             </button>
           </div>
@@ -436,9 +369,6 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({
                   <h4 className="font-editorial text-2xl text-white">
                     {selectedLightboxImage.title}
                   </h4>
-                  <p className="font-mono text-xs text-[#9b9ba3] mt-1">
-                    {selectedLightboxImage.caption}
-                  </p>
                 </div>
               </div>
             </motion.div>
